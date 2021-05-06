@@ -1,7 +1,9 @@
 
 TO DO:
+-implement basic db and queries
+-implement products 
 
--implement class with a static method that handles errors
 
 DONE:
 -implement a singleton scanner class
+-implement class with static methods that handles errors

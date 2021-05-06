@@ -31,14 +31,10 @@ public class Account {
     public double getBalance() {
         return this.balance;
     }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
     //  ---------- end of getters/setters -------------
 
     //      worker methods
-    public boolean withdraw(double amount){
+    public boolean debit(double amount) {
         if (this.balance >= amount) {
             this.balance -= amount;
             System.out.println("Transaction successful!\nAvailable balance: " + this.balance + "\n");
@@ -47,4 +43,9 @@ public class Account {
         System.out.format("Transaction failed! Insufficient funds!\nAvailable balance: %s\n", this.balance);
         return false;
     }
+
+    public void credit(double amount) {
+        this.balance += amount;
+    }
+    //      end of worker methods
 }

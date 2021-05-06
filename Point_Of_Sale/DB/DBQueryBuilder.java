@@ -35,10 +35,6 @@ public class DBQueryBuilder {
             "call sp_decreaseStock"
     };
 
-    private DBQueryBuilder() {
-
-    }
-
     public static String buildQry(EventDefs.QueryEvent qryEv) {
         switch (qryEv.qryType) {
         case ADD_CLI:

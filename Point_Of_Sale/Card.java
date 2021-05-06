@@ -10,11 +10,9 @@ public class Card {
     }
 
     public Card(String pin) {
-        try{
-            Integer.parseInt(pin);
-            this.pin=pin;
-            System.out.println(this.pin);
-        } catch (Exception ex) {
+        if(ErrorHandling.checkIntFromString(pin)){
+            this.pin = pin;
+        } else {
             this.pin = "";
         }
     }
@@ -23,13 +21,11 @@ public class Card {
         Scanner scanner = ScannerAccess.getScanner();
         String res;
         while (true) {
-            try {
-                System.out.println("Enter new pin: ");
-                res = scanner.nextLine(); // pin is read as string
-                Integer.parseInt(res); //check if an int can be parsed from enterd pin
-                                       //if it cant, an exception will be thrown. if it can then the pin is a valid number
-                break; //end loop
-            } catch (Exception err) {
+            System.out.println("Enter new pin: ");
+            res = scanner.nextLine(); // pin is read as string
+            if (ErrorHandling.checkIntFromString(res)) {
+                break;  //end loop
+            } else {
                 System.out.println("Invalid pin!");
             }
         }
@@ -40,19 +36,17 @@ public class Card {
     public boolean checkPin() {
         Scanner scanner = ScannerAccess.getScanner();
         String res;
-        int tries = 3;
         for (int i = 2; i >= 0; i--) {   
-            try {
-                System.out.println("Enter pin: ");
-                res = scanner.nextLine();
-                Integer.parseInt(res);
+            System.out.println("Enter pin: ");
+            res = scanner.nextLine();
+            if (ErrorHandling.checkIntFromString(res)) {
                 if (res.compareTo(this.pin) == 0) {
                     return true;
                 } else {
                     System.out.println("wrong pin: ");
                 }
-            } catch (Exception err) {
-                System.out.println("Invalid pin!");
+            } else {
+                System.out.println("Invalid pin entered!");
             }
             System.out.format("number of attempts: %s\n", i);
         }

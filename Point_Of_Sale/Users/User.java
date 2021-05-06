@@ -1,8 +1,13 @@
 package Point_Of_Sale.Users;
 
+enum USER_TYPE {
+    CLIENT,
+    EMPLOYEE
+}
+
 public abstract class User {
     private String ID;
-    private String name; 
+    private String name;
     private String email;
 
     public User() {
@@ -10,6 +15,7 @@ public abstract class User {
         this.name = "";
         this.email = "";
     }
+
     public User(String id, String name, String email) {
         this.ID = id;
         this.name = name;
@@ -35,6 +41,7 @@ public abstract class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
     public String getEmail() {
         return this.email;
     }
