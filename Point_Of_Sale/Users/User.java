@@ -20,6 +20,10 @@ public abstract class User {
         return this.ID;
     }
 
+    public void setID(String id) {
+        this.ID = id;
+    }
+
     public String getName() {
         return this.name;
     }

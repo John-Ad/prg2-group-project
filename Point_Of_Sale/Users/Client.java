@@ -1,24 +1,32 @@
 package Point_Of_Sale.Users;
 
+import Point_Of_Sale.Account;
+
 public class Client extends User {
-    private String accID;
+    private Account account;
+    private int cardNum;
 
     public Client() {
         super();
-
-        accID = "";
     }
 
-    public Client(String id, String name, String email, String accID) {
+    public Client(String id, String name, String email) {
         super(id, name, email);
-        this.accID = accID;
     }
 
-    public String getAccID() {
-        return this.accID;
+    public Account getAccID() {
+        return this.account;
     }
 
-    public void setAccID(String accID) {
-        this.accID = accID;
+    public void setAccID(Account acc) {
+        this.account = acc;
+    }
+
+    public int getCardNum() {
+        return this.cardNum;
+    }
+
+    public void setCardNum(int cardNum) {
+        this.cardNum = cardNum;
     }
 }
