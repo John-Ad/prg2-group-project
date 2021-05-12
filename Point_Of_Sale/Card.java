@@ -10,7 +10,7 @@ public class Card {
     }
 
     public Card(String pin) {
-        if(ErrorHandling.checkIntFromString(pin)){
+        if(NumberConversion.toInt(pin) != NumberConversion.ERROR){
             this.pin = pin;
         } else {
             this.pin = "";
@@ -23,7 +23,7 @@ public class Card {
         while (true) {
             System.out.println("Enter new pin: ");
             res = scanner.nextLine(); // pin is read as string
-            if (ErrorHandling.checkIntFromString(res)) {
+            if (NumberConversion.toInt(res) != NumberConversion.ERROR) {
                 break;  //end loop
             } else {
                 System.out.println("Invalid pin!");
@@ -39,7 +39,7 @@ public class Card {
         for (int i = 2; i >= 0; i--) {   
             System.out.println("Enter pin: ");
             res = scanner.nextLine();
-            if (ErrorHandling.checkIntFromString(res)) {
+            if (NumberConversion.toInt(res) != NumberConversion.ERROR) {
                 if (res.compareTo(this.pin) == 0) {
                     return true;
                 } else {

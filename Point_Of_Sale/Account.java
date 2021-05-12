@@ -10,6 +10,7 @@ public class Account {
         this.accountID = "";
         this.balance = 0;
         this.card = new Card();
+        this.card.setPin();
     }
 
     public Account(String accID, double bal) {
@@ -30,6 +31,10 @@ public class Account {
 
     public double getBalance() {
         return this.balance;
+    }
+
+    public Card getCard() {
+        return this.card;
     }
     //  ---------- end of getters/setters -------------
 

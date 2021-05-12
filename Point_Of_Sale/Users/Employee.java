@@ -7,11 +7,13 @@ public class Employee extends User{
     public Employee(){
         super();
         this.salary = 0;
+        this.taxRegNum = "";
     }
 
-    public Employee(String id, String name, String email, double salary) {
+    public Employee(String id, String name, String email, double salary,String reg) {
         super(id, name, email);
         this.salary = salary;
+        this.taxRegNum = reg;
     }
 
     public double getSalary() {

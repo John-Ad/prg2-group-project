@@ -6,7 +6,7 @@ import Point_Of_Sale.Users.Client;
 public class DBQueryBuilder {
     private static String queries[] = { 
             //client queries
-            "call sp_addClient",
+            "insert into Client values",
             "call sp_remClient",
             "call sp_getClient",
 
@@ -21,12 +21,12 @@ public class DBQueryBuilder {
             "call sp_getProduct",
 
             //Account queries
-            "call sp_addAccount",
+            "insert into Account values",
             "call sp_remAccount",
             "call sp_getAccount",
 
             //Card queries
-            "call sp_linkCard",
+            "insert into Card values",
             "call sp_unlinkCard",
             "call sp_getCard",
 
