@@ -10,6 +10,7 @@ public abstract class User {
     private String name;
     private String email;
 
+    // constructors
     public User() {
         this.ID = "";
         this.name = "";
@@ -21,7 +22,9 @@ public abstract class User {
         this.name = name;
         this.email = email;
     }
+    // end of constructors
 
+    // getters/setters
     public String getID() {
         return this.ID;
     }
@@ -44,5 +47,12 @@ public abstract class User {
 
     public String getEmail() {
         return this.email;
+    }
+    // end of getters/setters
+
+    @Override
+    public String toString() {      // custom to string
+        return String.format("%-10s\t\t%-20s\t\t%-10s\n%-10s\t\t%-20s\t\t%-10s", "ID", "Name", "Email", this.ID, this.name,
+                this.email);
     }
 }

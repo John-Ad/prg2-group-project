@@ -7,17 +7,23 @@ public abstract class Product {
     private float weight;
     private int quantity;
 
+    // constructors
     public Product() {
         this.productID = "";
+        this.description = "";
         this.price = 0;
         this.weight = 0;
+        this.quantity = 0;
     }
 
-    public Product(String id, double price, float weight) {
+    public Product(String id, String desc, double price, float weight, int qty) {
         this.productID = id;
+        this.description = desc;
         this.price = price;
         this.weight = weight;
+        this.quantity = qty;
     }
+    // end of constructors
 
     //  getters/setters
     public String getProdID(){
@@ -58,5 +64,12 @@ public abstract class Product {
 
     public void setDesc(String desc) {
         this.description = desc;
+    }
+
+    @Override
+    public String toString(){
+        return String.format("%-10s\t\t%-30s\t\t%-10s\t\t%-10s\t\t%-10s\n%-10s\t\t%-30s\t\t%-10s\t\t%-10s\t\t%-10s",
+                "ID", "Desc", "Price", "Weight", "Qty", this.productID, this.description, this.price, this.weight,
+                this.quantity);
     }
 }

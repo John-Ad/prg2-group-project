@@ -1,4 +1,4 @@
-package Point_Of_Sale.Products;
+package Point_Of_Sale.Users;
 
 import java.util.ArrayList;
 import java.util.Arrays;

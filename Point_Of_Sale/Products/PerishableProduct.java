@@ -8,8 +8,8 @@ public class PerishableProduct extends Product {
         this.expirationDate = "";
     }
 
-    public PerishableProduct(String id, double price, float weight, String exp) {
-        super(id, price, weight);
+    public PerishableProduct(String id, String desc, double price, float weight, int qty, String exp) {
+        super(id, desc, price, weight, qty);
         this.expirationDate = exp;
     }
 

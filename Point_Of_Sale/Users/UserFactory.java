@@ -4,10 +4,11 @@ public class UserFactory {
     public static User getUser(USER_TYPE type) {
         switch (type) {
         case CLIENT:
-            return new Client();
+            return UserBuilder.buildClient();
         case EMPLOYEE:
-            return new Employee();
+            return UserBuilder.buildEmployee();
+        default:
+            return null;
         }
-        return null;
     }
 }

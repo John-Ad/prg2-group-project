@@ -10,13 +10,17 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import Point_Of_Sale.POS;
-import Point_Of_Sale.DB.DBConnection;
-import Point_Of_Sale.Exceptions.LowStockException;
-import Point_Of_Sale.Reports.REPORT_TYPE;
+import Point_Of_Sale.*;
+import Point_Of_Sale.Products.PRODUCT_TYPE;
+import Point_Of_Sale.Products.PerishableProduct;
+import Point_Of_Sale.Products.ProductFactory;
 
 public class Driver {
     public static void main(String args[]) throws FileNotFoundException {
+        PerishableProduct prod = (PerishableProduct) ProductFactory.getProduct(PRODUCT_TYPE.PERISHABLE);
+
+        System.out.print(prod);
+        /*      thread checking
         ExecutorService exServ = Executors.newSingleThreadExecutor();
         Future f = exServ.submit(new StockChecker());
 
@@ -25,6 +29,7 @@ public class Driver {
         } catch (Exception e) {
             System.out.print(e.getMessage());
         }
+        */
 
         /*
         Scanner scanner = ScannerAccess.getScanner(REPORT_TYPE.EARNINGS);
