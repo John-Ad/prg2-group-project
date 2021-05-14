@@ -1,8 +1,13 @@
 package Point_Of_Sale;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class Card {
+public class Card implements Serializable{
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private String pin;     //pin is stored as a string to allow pins to start with zero or multiple zeros
 
     public Card() {

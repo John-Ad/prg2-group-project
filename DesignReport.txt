@@ -1,0 +1,79 @@
+Problem: create a point of sales system.
+
+User requirements:
+
+- implementation of accounts and cards for clients
+- facilitation of transactions
+- storage of reports
+- storage of data(users,products)
+- retrieval of stored data
+- transfering of money from and to accounts
+- creation/removal of users/products
+
+Given the above we have decided to use creational design patterns because our system relies heavily 
+on object construction and manipulation. The specific methods we have made use of are: Factory method, Singleton method, 
+and Builder method.
+
+The classes we will use:
+
+- POS:  main class that will bring all the modules together 
+    The main purpose of pos is to act as the main loop of the system,
+    handle events, and keep track of any worker threads
+- StockChecker: worker thread that checks stock levels
+- ScannerAccess: Singleton type class that provides global access to a Scanner
+- NumberConversion: provides conversion and validation of numbers given as strings
+
+- User: abstract class that serves as the base for other users
+- Employee: extends User and provides attributes and methods specific to employees 
+- Client: extends User and provides attributes and methods specific to clients 
+    Clients contain an Account object as part of its attributes
+- UserBuilder: builds up Employee/Client objects using input from the user(computer user)
+    Returns either employee or client depending on the method called
+- UserFactory: Factory class that returns a subclass of User
+    Makes use of USER_TYPE and UserBuilder
+- USER_TYPE: enumeration of the different types of users
+
+- Product: abstract class that serves as the base for other users
+- PerishableProduct: extends Product and provides attributes and methods specific to products that can expire 
+- NonPerishableProduct: extends Product and provides attributes and methods specific to products that cannot expire 
+- ProductBuilder: builds up PerishableProduct/NonPerishableProduct objects using input from the user(computer user)
+    Returns either PerishableProduct or NonPerishableProduct depending on the method called
+- ProductFactory: Factory class that returns a subclass of Product
+    Makes use of PRODUCT_TYPE and ProductBuilder
+- PRODUCT_TYPE: enumeration of the different types of users
+
+- Account: stores details such as balance and contains methods to debit/credit account 
+    Makes use of the Card class as an attribute and is the only point of access for Card objects
+- Card: used to authorize transactions
+
+- Event: abstract class that serves as the base for other events
+- StorageEvent: extends Event and provides attributes and methods for storing data 
+- ReportEvent: extends Event and provides attributes and methods for generating and storing reports
+- TransactionEvent: extends Event and provides attributes and methods for handling transactions
+- EventFactory: Factory class that returns a subclass of Event
+    Makes use of EVENT_TYPE
+- EVENT_TYPE: enumeration of the different types of events
+- TRAN_TYPE: enumeration of the different types of transactions
+- REPORT_TYPE: enumeration of the different types of reports
+- STORAGE_TYPE: enumeration of the different types of storage
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+
+
+
+
+

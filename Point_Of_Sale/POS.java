@@ -5,7 +5,7 @@ import Point_Of_Sale.Users.*;
 import java.util.Scanner;
 
 import Point_Of_Sale.EventDefs;
-import Point_Of_Sale.DB.DBQueryBuilder;
+import Point_Of_Sale.DB.QueryBuilder;
 import Point_Of_Sale.EventDefs.EVENT_TYPE;
 import Point_Of_Sale.EventDefs.Event;
 import Point_Of_Sale.EventDefs.QUERY_TYPE;
@@ -32,7 +32,7 @@ public class POS implements Runnable {
         switch (ev.evType) {
         case QUERY:
             QueryEvent qEv = (QueryEvent) ev;
-            System.out.println(DBQueryBuilder.buildQry(qEv));
+            System.out.println(QueryBuilder.buildQry(qEv));
             break;
         case REPORT:
             break;

@@ -3,6 +3,7 @@ package Point_Of_Sale;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -14,12 +15,34 @@ import Point_Of_Sale.*;
 import Point_Of_Sale.Products.PRODUCT_TYPE;
 import Point_Of_Sale.Products.PerishableProduct;
 import Point_Of_Sale.Products.ProductFactory;
+import Point_Of_Sale.Storage.STORAGE_TYPE;
+import Point_Of_Sale.Storage.Storage;
+import Point_Of_Sale.Users.Client;
+import Point_Of_Sale.Users.USER_TYPE;
+import Point_Of_Sale.Users.UserFactory;
 
 public class Driver {
     public static void main(String args[]) throws FileNotFoundException {
+        ArrayList<Client> clients = (ArrayList<Client>) Storage.readObjects(STORAGE_TYPE.STORE_CUST);
+
+        System.out.print(clients.get(1).toString());
+
+        /*  Storage write testing
+        ArrayList<Client> clients = new ArrayList<Client>();
+
+        clients.add((Client) UserFactory.getUser(USER_TYPE.CLIENT));
+        clients.add((Client) UserFactory.getUser(USER_TYPE.CLIENT));
+        clients.add((Client) UserFactory.getUser(USER_TYPE.CLIENT));
+
+        Storage.writeObjects(STORAGE_TYPE.STORE_CUST, clients);
+        */
+
+
+        /* builder tester
         PerishableProduct prod = (PerishableProduct) ProductFactory.getProduct(PRODUCT_TYPE.PERISHABLE);
 
         System.out.print(prod);
+        */
         /*      thread checking
         ExecutorService exServ = Executors.newSingleThreadExecutor();
         Future f = exServ.submit(new StockChecker());

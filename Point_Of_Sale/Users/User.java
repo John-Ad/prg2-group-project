@@ -1,11 +1,9 @@
 package Point_Of_Sale.Users;
 
-enum USER_TYPE {
-    CLIENT,
-    EMPLOYEE
-}
+import java.io.Serializable;
 
-public abstract class User {
+public abstract class User implements Serializable{
+    private static final long serialVersionUID = 1L;    // id for serialization
     private String ID;
     private String name;
     private String email;
