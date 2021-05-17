@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Storage {
+    private Storage() {
+    }
+
     private static ObjectOutputStream getOutStream(String file) throws Exception {
         FileOutputStream fs = new FileOutputStream(new File(file));
         ObjectOutputStream os = new ObjectOutputStream(fs);
@@ -21,7 +24,7 @@ public class Storage {
         return os;
     }
 
-    public static void writeObjects(STORAGE_TYPE type, HashMap<String, Object> data) {
+    public static void writeObjects(STORAGE_TYPE type, Object data) {
         try {
             ObjectOutputStream os = getOutStream(type.getFileName());
             os.writeObject(data);

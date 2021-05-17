@@ -2,6 +2,7 @@ package Point_Of_Sale.Products;
 
 public abstract class Product {
     private String productID;
+    private String name;
     private String description;
     private double price;
     private float weight;
@@ -10,14 +11,16 @@ public abstract class Product {
     // constructors
     public Product() {
         this.productID = "";
+        this.name = "";
         this.description = "";
         this.price = 0;
         this.weight = 0;
         this.quantity = 0;
     }
 
-    public Product(String id, String desc, double price, float weight, int qty) {
+    public Product(String id, String name, String desc, double price, float weight, int qty) {
         this.productID = id;
+        this.name = name;
         this.description = desc;
         this.price = price;
         this.weight = weight;
@@ -28,6 +31,10 @@ public abstract class Product {
     //  getters/setters
     public String getProdID(){
         return this.productID;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     public double getPrice() {
@@ -48,6 +55,10 @@ public abstract class Product {
 
     public void setProdID(String id){
         this.productID = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setPrice(double price) {

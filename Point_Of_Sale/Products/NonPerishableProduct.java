@@ -8,8 +8,9 @@ public class NonPerishableProduct extends Product {
         this.manufacturedDate = "";
     }
 
-    public NonPerishableProduct(String id, String desc, double price, float weight, int qty, String manuDate) {
-        super(id, desc, price, weight, qty);
+    public NonPerishableProduct(String id, String name, String desc, double price, float weight, int qty,
+            String manuDate) {
+        super(id, name, desc, price, weight, qty);
         this.manufacturedDate = manuDate;
     }
 

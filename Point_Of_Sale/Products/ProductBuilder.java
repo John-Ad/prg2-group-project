@@ -11,10 +11,14 @@ import Point_Of_Sale.TextReadWrite;
 public class ProductBuilder {
     private static ArrayList<Object> buildProdDetails() {
         String uID = Integer.toString((int) Math.floor(Math.random() * 900000) + 100000); //random 6 digit value
+        String name;
         String desc;
         double price;
         float weight;
         int qty;
+
+        System.out.print("\nenter name: ");
+        name = TextReadWrite.getScanner().nextLine();
 
         System.out.print("\nenter description: ");
         desc = TextReadWrite.getScanner().nextLine();
@@ -55,7 +59,7 @@ public class ProductBuilder {
         }
 
 
-        return new PerishableProduct((String)pData.get(0), (String)pData.get(1), (double)pData.get(2), (float)pData.get(3), (int)pData.get(4),
+        return new PerishableProduct((String)pData.get(0),(String)pData.get(1), (String)pData.get(2), (double)pData.get(3), (float)pData.get(4), (int)pData.get(5),
                 date.toString());
     }
 
@@ -73,8 +77,7 @@ public class ProductBuilder {
             }
         }
 
-
-        return new NonPerishableProduct((String)pData.get(0), (String)pData.get(1), (double)pData.get(2), (float)pData.get(3), (int)pData.get(4),
+        return new NonPerishableProduct((String)pData.get(0),(String)pData.get(1), (String)pData.get(2), (double)pData.get(3), (float)pData.get(4), (int)pData.get(5),
                 date.toString());
     }
 }
