@@ -15,17 +15,58 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import Point_Of_Sale.*;
+import Point_Of_Sale.Events.Event;
+import Point_Of_Sale.Events.EventFactory;
+import Point_Of_Sale.Products.NonPerishableProduct;
 import Point_Of_Sale.Products.PRODUCT_TYPE;
 import Point_Of_Sale.Products.PerishableProduct;
+import Point_Of_Sale.Products.Product;
 import Point_Of_Sale.Products.ProductFactory;
 import Point_Of_Sale.Storage.STORAGE_TYPE;
 import Point_Of_Sale.Storage.Storage;
+import Point_Of_Sale.Transactions.TRAN_TYPE;
 import Point_Of_Sale.Users.Client;
 import Point_Of_Sale.Users.USER_TYPE;
 import Point_Of_Sale.Users.UserFactory;
 
 public class Driver {
     public static void main(String args[]) throws FileNotFoundException {
+
+        //Event ev = EventFactory.getEvent(TRAN_TYPE.SALE);
+
+        /* remove old clients stored based on email+name and replace with clients stored based on email
+        HashMap<String, Client> map = new HashMap<String, Client>();
+        Client cli = (Client) UserFactory.getUser(USER_TYPE.CLIENT);
+        map.put(cli.getEmail(), cli);
+        Storage.writeObjects(STORAGE_TYPE.STORE_CUST, map);
+        */
+
+
+        /* test retrieval of test objects
+        HashMap<String, Product> map = (HashMap<String, Product>) Storage.readObjects(STORAGE_TYPE.GET_PROD);
+
+        while(true){
+            System.out.print("enter product name: ");
+            if (map.containsKey(TextReadWrite.getScanner().nextLine())) {
+                System.out.println("found");
+            } else {
+                System.out.println("not found");
+                break;
+            }
+        }
+        */
+
+
+        /* add test products
+        HashMap<String, Product> map = new HashMap<String, Product>();
+
+        Product prod;
+        for (int i = 0; i < 3; i++) {
+            prod = ProductFactory.getProduct(PRODUCT_TYPE.PERISHABLE);
+            map.put(prod.getName(), prod);
+        }
+        Storage.writeObjects(STORAGE_TYPE.STORE_PROD, map);
+        */
 
         /*
         HashMap<String, Client> map = (HashMap<String, Client>) Storage.readObjects(STORAGE_TYPE.STORE_CUST);

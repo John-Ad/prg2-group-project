@@ -1,6 +1,8 @@
 package Point_Of_Sale.Products;
 
-public abstract class Product {
+import java.io.Serializable;
+
+public abstract class Product implements Serializable {
     private String productID;
     private String name;
     private String description;
@@ -29,7 +31,7 @@ public abstract class Product {
     // end of constructors
 
     //  getters/setters
-    public String getProdID(){
+    public String getProdID() {
         return this.productID;
     }
 
@@ -53,7 +55,7 @@ public abstract class Product {
         return this.description;
     }
 
-    public void setProdID(String id){
+    public void setProdID(String id) {
         this.productID = id;
     }
 
@@ -78,7 +80,7 @@ public abstract class Product {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return String.format("%-10s\t\t%-30s\t\t%-10s\t\t%-10s\t\t%-10s\n%-10s\t\t%-30s\t\t%-10s\t\t%-10s\t\t%-10s",
                 "ID", "Desc", "Price", "Weight", "Qty", this.productID, this.description, this.price, this.weight,
                 this.quantity);

@@ -41,7 +41,7 @@ public class ProductBuilder {
             System.out.print("\nenter quantity: ");
         }
 
-        return new ArrayList<Object>(Arrays.asList(uID, desc, price, weight, qty));
+        return new ArrayList<Object>(Arrays.asList(uID, name, desc, price, weight, qty));
     }
 
     public static PerishableProduct buildPerProd() {
