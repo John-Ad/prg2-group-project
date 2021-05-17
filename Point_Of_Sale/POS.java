@@ -1,15 +1,12 @@
 package Point_Of_Sale;
 
 import Point_Of_Sale.Users.*;
+import Point_Of_Sale.TextReadWrite;
+import Point_Of_Sale.Events.Event;
 
 import java.util.Scanner;
 
-import Point_Of_Sale.EventDefs;
-import Point_Of_Sale.DB.QueryBuilder;
-import Point_Of_Sale.EventDefs.EVENT_TYPE;
-import Point_Of_Sale.EventDefs.Event;
-import Point_Of_Sale.EventDefs.QUERY_TYPE;
-import Point_Of_Sale.EventDefs.QueryEvent;
+
 
 /**
  *  event handler definitions
@@ -28,17 +25,10 @@ public class POS implements Runnable {
         main.start();
     }
 
-    private void eventHandler(EventDefs.Event ev) {
-        switch (ev.evType) {
-        case QUERY:
-            QueryEvent qEv = (QueryEvent) ev;
-            System.out.println(QueryBuilder.buildQry(qEv));
-            break;
-        case REPORT:
-            break;
-        case TRANS:
-            break;
-        }
+    private void eventHandler(Event event) {
+        
+       
+        
     }
 
     @Override
@@ -47,17 +37,45 @@ public class POS implements Runnable {
 
         //-------------------------------------------
         
-        Scanner scanner = new Scanner(System.in);
-        Event ev;
+        Scanner scanner = TextReadWrite.getScanner();
         String input;
         int option;
 
         while (running) {
-            System.out.format("Choose an option (number)\n1.\tSale\n2.\tStock management\n3.\tCustomer management\n4.\tAccount management\n5.\tEmployee management\n6.\tExit\noption:\t");
+            System.out.println("Choose an option (number)\n1.\tTransaction\n2.\tStock management\n3.\tCustomer management\n4.\tAccount management\n5.\tEmployee management\n6.\tExit\noption:\t");
             input = scanner.nextLine();
-            if ((option = NumberConversion.toInt(input)) != NumberConversion.ERROR) {
-                ev = EventFactory.getEvent(option);
-                eventHandler(ev);
+            switch(NumberConversion.toInt(input)) {
+                case NumberConversion.ERROR:
+                    System.out.println("Invalid input");
+                    break;
+                case 1:
+                    running= false;
+                    break;
+                case 2:
+                    while (true) { 
+                        system.out.println("choose an option (number)\n1.\tAdd Stock\n2.\tRemove Stock\n3.\tSearch Stock\n4.\tRetrieve Stock\n5.\noptoin:\t");    //loop for option 2
+                        input = scanner.nextLine();
+                        switch(NumberConversion.toInt(input)) {
+                            case NumberConversion.ERROR:
+                                System.out.println("Invalid input");
+                                break;
+                            case 1:
+                                running= false;
+                                break;
+                            case 2:
+                                running= false;
+                                break;
+                            case 3:
+                                running= false;
+                                break;
+                            case 4:
+                                running= false;
+                                break;
+                            case 5:
+                                running= false;
+                                break;
+                        }
+                    }
             }
         }
     }
