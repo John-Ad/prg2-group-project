@@ -12,19 +12,20 @@ public class EventFactory {
             TransactionEvent event = new TransactionEvent();
             event.evType = type;
 
-            int choice=0;
-            System.out.println("1.\tSale\n2.\tRefund: "); // determine
-            switch(NumberConversion.toInt(TextReadWrite))
-            if ((choice = NumberConversion.toInt(TextReadWrite.getScanner().nextLine())) != 0) {
-                switch (choice) {
+            for (boolean i = true; i == true;) {
+                System.out.println("1.\tSale\n2.\tRefund: ");
+                switch (NumberConversion.toInt(TextReadWrite.getScanner().nextLine())) {
+                case NumberConversion.ERROR:
+                    System.out.println("Invalid input");
+                    break;
                 case 1:
                     event.tranType = TRAN_TYPE.SALE;
+                    i = false;
                     break;
                 case 2:
                     event.tranType = TRAN_TYPE.REFUND;
+                    i = false;
                     break;
-                default:
-                    return null;
                 }
             }
 
