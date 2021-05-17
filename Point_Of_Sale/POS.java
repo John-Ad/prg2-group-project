@@ -1,15 +1,11 @@
 package Point_Of_Sale;
 
+import Point_Of_Sale.Events.EVENT_TYPE;
+import Point_Of_Sale.Events.Event;
+import Point_Of_Sale.Events.EventFactory;
 import Point_Of_Sale.Users.*;
 
 import java.util.Scanner;
-
-import Point_Of_Sale.EventDefs;
-import Point_Of_Sale.DB.QueryBuilder;
-import Point_Of_Sale.EventDefs.EVENT_TYPE;
-import Point_Of_Sale.EventDefs.Event;
-import Point_Of_Sale.EventDefs.QUERY_TYPE;
-import Point_Of_Sale.EventDefs.QueryEvent;
 
 /**
  *  event handler definitions
@@ -28,17 +24,8 @@ public class POS implements Runnable {
         main.start();
     }
 
-    private void eventHandler(EventDefs.Event ev) {
-        switch (ev.evType) {
-        case QUERY:
-            QueryEvent qEv = (QueryEvent) ev;
-            System.out.println(QueryBuilder.buildQry(qEv));
-            break;
-        case REPORT:
-            break;
-        case TRANS:
-            break;
-        }
+    private void eventHandler(Event ev) {
+        
     }
 
     @Override
@@ -47,17 +34,28 @@ public class POS implements Runnable {
 
         //-------------------------------------------
         
-        Scanner scanner = new Scanner(System.in);
-        Event ev;
+        Scanner scanner = TextReadWrite.getScanner();
         String input;
         int option;
 
+
+
         while (running) {
-            System.out.format("Choose an option (number)\n1.\tSale\n2.\tStock management\n3.\tCustomer management\n4.\tAccount management\n5.\tEmployee management\n6.\tExit\noption:\t");
+            System.out.println("Choose an option (number)\n1.\tSale\n2.\tStock management\n3.\tCustomer management\n4.\tAccount management\n5.\tEmployee management\n6.\tExit\noption:\t");
             input = scanner.nextLine();
-            if ((option = NumberConversion.toInt(input)) != NumberConversion.ERROR) {
-                ev = EventFactory.getEvent(option);
-                eventHandler(ev);
+            switch (NumberConversion.toInt(input)) {
+            case NumberConversion.ERROR:
+                System.out.println("Invalid input");
+                break;
+            case 1:
+                running = false;
+                break;
+            case 2:
+                while (true) {      //loop for option 2
+                    Event ev = EventFactory.getEvent(EVENT_TYPE.TRANS);
+                    this.eventHandler(ev);
+                }
+                break;
             }
         }
     }

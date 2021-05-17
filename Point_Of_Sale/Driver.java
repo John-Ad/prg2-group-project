@@ -32,6 +32,8 @@ import Point_Of_Sale.Users.UserFactory;
 public class Driver {
     public static void main(String args[]) throws FileNotFoundException {
 
+        POS pos = new POS();
+
         //Event ev = EventFactory.getEvent(TRAN_TYPE.SALE);
 
         /* remove old clients stored based on email+name and replace with clients stored based on email
