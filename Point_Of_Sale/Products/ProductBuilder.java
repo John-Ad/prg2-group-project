@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 import Point_Of_Sale.NumberConversion;
-import Point_Of_Sale.ScannerAccess;
+import Point_Of_Sale.TextReadWrite;
 
 public class ProductBuilder {
     private static ArrayList<Object> buildProdDetails() {
@@ -17,22 +17,22 @@ public class ProductBuilder {
         int qty;
 
         System.out.print("\nenter description: ");
-        desc = ScannerAccess.getScanner().nextLine();
+        desc = TextReadWrite.getScanner().nextLine();
 
         System.out.print("\nenter price: ");
-        while ((price = NumberConversion.toDouble(ScannerAccess.getScanner().nextLine())) == NumberConversion.ERROR) {
+        while ((price = NumberConversion.toDouble(TextReadWrite.getScanner().nextLine())) == NumberConversion.ERROR) {
             System.out.print("\ninvalid price entered!");
             System.out.print("\nenter price: ");
         }
 
         System.out.print("\nenter weight: ");
-        while ((weight = NumberConversion.toFloat(ScannerAccess.getScanner().nextLine())) == NumberConversion.ERROR) {
+        while ((weight = NumberConversion.toFloat(TextReadWrite.getScanner().nextLine())) == NumberConversion.ERROR) {
             System.out.print("\ninvalid weight entered!");
             System.out.print("\nenter weight: ");
         }
 
         System.out.print("\nenter quantity: ");
-        while ((qty = NumberConversion.toInt(ScannerAccess.getScanner().nextLine())) == NumberConversion.ERROR) {
+        while ((qty = NumberConversion.toInt(TextReadWrite.getScanner().nextLine())) == NumberConversion.ERROR) {
             System.out.print("\ninvalid quantity entered!");
             System.out.print("\nenter quantity: ");
         }
@@ -47,7 +47,7 @@ public class ProductBuilder {
         while (true) {
             System.out.print("\nEnter expiration date (dd/mm/yy): ");
             try {
-                date = new SimpleDateFormat("dd/mm/yyyy").parse(ScannerAccess.getScanner().nextLine());
+                date = new SimpleDateFormat("dd/mm/yyyy").parse(TextReadWrite.getScanner().nextLine());
                 break;
             } catch (Exception ex) {
                 System.out.println("Invalid date entered");
@@ -66,7 +66,7 @@ public class ProductBuilder {
         while (true) {
             System.out.print("\nEnter manufactured date (dd/mm/yy): ");
             try {
-                date = new SimpleDateFormat("dd/mm/yyyy").parse(ScannerAccess.getScanner().nextLine());
+                date = new SimpleDateFormat("dd/mm/yyyy").parse(TextReadWrite.getScanner().nextLine());
                 break;
             } catch (Exception ex) {
                 System.out.println("Invalid date entered");

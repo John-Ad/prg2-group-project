@@ -23,7 +23,7 @@ public class Card implements Serializable{
     }
 
     public void setPin() {
-        Scanner scanner = ScannerAccess.getScanner();
+        Scanner scanner = TextReadWrite.getScanner();
         String res;
         while (true) {
             System.out.println("Enter new pin: ");
@@ -39,7 +39,7 @@ public class Card implements Serializable{
     }
 
     public boolean checkPin() {
-        Scanner scanner = ScannerAccess.getScanner();
+        Scanner scanner = TextReadWrite.getScanner();
         String res;
         for (int i = 2; i >= 0; i--) {   
             System.out.println("Enter pin: ");

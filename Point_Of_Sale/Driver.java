@@ -5,7 +5,10 @@ import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,9 +26,38 @@ import Point_Of_Sale.Users.UserFactory;
 
 public class Driver {
     public static void main(String args[]) throws FileNotFoundException {
+
+        /*
+        HashMap<String, Client> map = (HashMap<String, Client>) Storage.readObjects(STORAGE_TYPE.STORE_CUST);
+
+        //System.out.print(map.get("sdfsdf").toString());
+
+        Iterator iterator = map.entrySet().iterator();
+
+        while (iterator.hasNext()) {
+            Map.Entry m = (Map.Entry) iterator.next();
+            Client cl = (Client)m.getValue();
+            System.out.println(cl.toString());
+        }
+        */
+
+        /* convert arraylist storage to map storage
+        HashMap<String, Client> map = new HashMap<String, Client>();
+
+        ArrayList<Client> clients = (ArrayList<Client>) Storage.readObjects(STORAGE_TYPE.STORE_CUST);
+
+        for (Client cli : clients) {
+            map.put(cli.getEmail() + cli.getName(), cli);
+        }
+        System.out.print(map.get(clients.get(0).getEmail() + clients.get(0).getName()).toString());
+
+        Storage.writeObjects(STORAGE_TYPE.STORE_CUST, map);
+        */
+        /*
         ArrayList<Client> clients = (ArrayList<Client>) Storage.readObjects(STORAGE_TYPE.STORE_CUST);
 
         System.out.print(clients.get(1).toString());
+        */
 
         /*  Storage write testing
         ArrayList<Client> clients = new ArrayList<Client>();

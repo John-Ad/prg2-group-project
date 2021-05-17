@@ -19,9 +19,14 @@ The classes we will use:
 - POS:  main class that will bring all the modules together 
     The main purpose of pos is to act as the main loop of the system,
     handle events, and keep track of any worker threads
+- Storage: handles the serialization and storage of objects
 - StockChecker: worker thread that checks stock levels
 - ScannerAccess: Singleton type class that provides global access to a Scanner
 - NumberConversion: provides conversion and validation of numbers given as strings
+- ReportGenerator: generates reports based on the report type supplied
+- Report: contains all attributes and methods needed to manipulate and eventually store reports 
+- UserNotFoundException: Custom exception
+- UserAlreadyExistsException: Custom exception
 
 - User: abstract class that serves as the base for other users
 - Employee: extends User and provides attributes and methods specific to employees 
