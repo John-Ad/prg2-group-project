@@ -30,7 +30,7 @@ public class POS implements Runnable {
     }
 
     private void eventHandler(Event event) {
-        System.out.println(((TransactionEvent)event).tranType);1
+        System.out.println(((TransactionEvent)event).tranType);
         
        
         
@@ -51,18 +51,19 @@ public class POS implements Runnable {
         while (running) {
             System.out.println("Choose an option (number)\n1.\tTransaction\n2.\tStock management\n3.\tCustomer management\n4.\tAccount management\n5.\tEmployee management\n6.\tExit\noption:\t");
             input = scanner.nextLine();
+            int i=0;
             switch(NumberConversion.toInt(input)) {
                 case NumberConversion.ERROR:
                     System.out.println("Invalid input");
                     break;
                 case 1:
-                    Event rg= EventFactory.getEvent(EVENT_TYPE.TRANS);
-                    eventHandler(rg);
+                    Event event= EventFactory.getEvent(EVENT_TYPE.TRANS);
+                    eventHandler(event);
                     running= false;
                     break;
                 case 2:
-                    while (true) { 
-                        System.out.println("choose an option (number)\n1.\tAdd Stock\n2.\tRemove Stock\n3.\tSearch Stock\n4.\tRetrieve Stock\n5.\noptoin:\t");    //loop for option 2
+                    while (i==0) { 
+                        System.out.println("choose an option (number)\n1.\tAdd Stock\n2.\tRemove Stock\n3.\tSearch Stock\n4.\tRetrieve Stock\n5.\tCount\n6.\tExit\noptoin:\t");    //loop for option 2
                         input = scanner.nextLine();
                         switch(NumberConversion.toInt(input)) {
                             case NumberConversion.ERROR:
@@ -83,12 +84,41 @@ public class POS implements Runnable {
                             case 5:
                                 running= false;
                                 break;
+                            case 6:
+                                i=2;
+                                break;
                         }
                     }
+                case 3:
+                    while (i==0) {
+                        System.out.println("choose an option (number)\n1.\tAdd User\n2.\tRemove User\n3.\tSearch User\n4.\tRetrieve User\n5.\tCount User\n6.\t Exit\noption:\t");
+                        input = scanner.nextLine();
+                        switch(NumberConversion.toInt(input)) {
+                            case NumberConversion.ERROR:
+                            System.out.println("Invalid input");
+                            break;
+                        case 1:
+        
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        case 4:
+                            break;
+                        case 5:
+                            break;
+                        case 6:
+                            i=2;
+                            break;
+                        }                        }
+                    }   
+                    i=0;
             }
+        
         }
     }
-}
+
 
 
 
