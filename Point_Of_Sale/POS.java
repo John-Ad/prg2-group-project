@@ -4,6 +4,10 @@ import Point_Of_Sale.Events.EVENT_TYPE;
 import Point_Of_Sale.Events.Event;
 import Point_Of_Sale.Events.EventFactory;
 import Point_Of_Sale.Events.TransactionEvent;
+import Point_Of_Sale.Storage.STORAGE_TYPE;
+import Point_Of_Sale.Storage.Storage;
+import Point_Of_Sale.Transactions.TRAN_TYPE;
+import Point_Of_Sale.Transactions.TransactionGenerator;
 import Point_Of_Sale.Users.*;
 import Point_Of_Sale.TextReadWrite;
 import Point_Of_Sale.Events.Event;
@@ -30,7 +34,18 @@ public class POS implements Runnable {
     }
 
     private void eventHandler(Event event) {
-        System.out.println(((TransactionEvent)event).tranType);
+        switch(event.evType) {
+            case TRANS:
+                TransactionEvent sale = (TransactionEvent) event;
+                if(sale.transaction.getClient().getCard().checkPin()) {
+                    if(sale.transaction.getAmount()<0) {                        //if the amount is negative then the client gets a refund
+                        sale.transaction.getClient().getAcc().credit(-sale.transaction.getAmount());
+                    } else {
+                        sale.transaction.getClient().getAcc().debit(sale.transaction.getAmount());
+                    }
+                    Storage.addObject(STORAGE_TYPE.STORE_TRAN, sale.transaction);
+                }
+        }
         
        
         
@@ -57,9 +72,28 @@ public class POS implements Runnable {
                     System.out.println("Invalid input");
                     break;
                 case 1:
-                    Event event= EventFactory.getEvent(EVENT_TYPE.TRANS);
-                    eventHandler(event);
-                    running= false;
+                TransactionEvent event = (TransactionEvent)EventFactory.getEvent(EVENT_TYPE.TRANS);
+                event.evType=EVENT_TYPE.TRANS;
+    
+                for (boolean b = true; b == true;) {
+                    System.out.println("1.\tSale\n2.\tRefund: ");
+                    switch (NumberConversion.toInt(TextReadWrite.getScanner().nextLine())) {
+                    case NumberConversion.ERROR:
+                        System.out.println("Invalid input");
+                        break;
+                    case 1:
+                        event.tranType = TRAN_TYPE.SALE;
+                        b = false;
+                        break;
+                    case 2:
+                        event.tranType = TRAN_TYPE.REFUND;
+                        b = false;
+                        break;
+                    }
+                }
+    
+                event.transaction = TransactionGenerator.getTran(event.tranType);
+                eventHandler(event);
                     break;
                 case 2:
                     while (i==0) { 
