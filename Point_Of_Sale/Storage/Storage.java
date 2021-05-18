@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import Point_Of_Sale.Products.Product;
 import Point_Of_Sale.Transactions.Transaction;
 import Point_Of_Sale.Users.Client;
 
@@ -63,9 +64,15 @@ public class Storage {
         switch (type) {
         case STORE_CUST:
             Client c = (Client) item;       //cast object to correct type
-            HashMap<String, Client> map = (HashMap<String, Client>) Storage.readObjects(type);  //retrieve stored data
-            map.put(c.getEmail(), c);       //add item to others
-            Storage.writeObjects(type, map);    // store data
+            HashMap<String, Client> cmap = (HashMap<String, Client>) Storage.readObjects(type);  //retrieve stored data
+            cmap.put(c.getEmail(), c);       //add item to others
+            Storage.writeObjects(type, cmap);    // store data
+            break;
+        case STORE_PROD:
+            Product p = (Product) item;
+            HashMap<String, Product> pmap = (HashMap<String, Product>) Storage.readObjects(type);  //retrieve stored data
+            pmap.put(p.getName(), p);
+            Storage.writeObjects(type, pmap);
             break;
         case STORE_TRAN:
             Transaction t = (Transaction) item;

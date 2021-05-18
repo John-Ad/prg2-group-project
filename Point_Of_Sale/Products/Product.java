@@ -3,6 +3,8 @@ package Point_Of_Sale.Products;
 import java.io.Serializable;
 
 public abstract class Product implements Serializable {
+    public static final int MIN_QTY = 5;    // used when checking stock levels
+
     private String productID;
     private String name;
     private String description;
