@@ -17,7 +17,7 @@ import Point_Of_Sale.Transactions.Transaction;
 import Point_Of_Sale.Users.Client;
 
 public class Report {
-    private REPORT_TYPE type; 
+    private REPORT_TYPE type;
 
     private String header;
     private ArrayList<ArrayList<String>> data;
@@ -41,12 +41,13 @@ public class Report {
             //---------------------
 
             // retrieve transaction data and client data
-            ArrayList<Transaction> arrC = new ArrayList<Transaction>(((ArrayList<Transaction>) Storage.readObjects(STORAGE_TYPE.GET_TRAN))); // create copy of array
+            ArrayList<Transaction> arrC = new ArrayList<Transaction>(
+                    ((ArrayList<Transaction>) Storage.readObjects(STORAGE_TYPE.GET_TRAN))); // create copy of array
             HashMap<String, Client> cli = (HashMap<String, Client>) Storage.readObjects(STORAGE_TYPE.GET_CUST);
             //---------------------------------------------
 
             // iterate through clients and for each client search through transactions and build data
-            for (Map.Entry<String,Client> elem : cli.entrySet()) {
+            for (Map.Entry<String, Client> elem : cli.entrySet()) {
                 name = ((Client) elem.getValue()).getName();
                 email = ((Client) elem.getValue()).getEmail();
                 row = new ArrayList<String>();
@@ -71,7 +72,7 @@ public class Report {
                 row.add(Integer.toString(itemsBought));
                 row.add(Double.toString(totalSpent));
                 //--------------------------------------
-                
+
                 data.add(row); // add row to data array
 
                 //reset shared variables
@@ -83,18 +84,19 @@ public class Report {
             break;
         case ITEMS:
             // data to be generated
-            String id, desc, price;
+            String pID, desc, price;
             int qty = 0;
             double total = 0;
             //---------------------
-            
+
             // retrieve transaction data and client data
-            ArrayList<Transaction> arrP = new ArrayList<Transaction>(((ArrayList<Transaction>) Storage.readObjects(STORAGE_TYPE.GET_TRAN))); // create copy of array
+            ArrayList<Transaction> arrP = new ArrayList<Transaction>(
+                    (ArrayList<Transaction>) Storage.readObjects(STORAGE_TYPE.GET_TRAN)); // create copy of array
             HashMap<String, Product> prod = (HashMap<String, Product>) Storage.readObjects(STORAGE_TYPE.GET_PROD);
             //---------------------------------------------
 
             for (Map.Entry<String, Product> elem : prod.entrySet()) {
-                id = ((Product) elem.getValue()).getProdID();
+                pID = ((Product) elem.getValue()).getProdID();
                 desc = ((Product) elem.getValue()).getDesc();
                 price = Double.toString(((Product) elem.getValue()).getPrice());
                 row = new ArrayList<String>();
@@ -102,7 +104,7 @@ public class Report {
                 // for each transaction loop through the items bought and see if they match the current prod being checked
                 for (Transaction t : arrP) {
                     for (Product p : t.getItems()) {
-                        if (p.getProdID().compareTo(id) == 0) {
+                        if (p.getProdID().compareTo(pID) == 0) {
                             qty++;
                         }
                     }
@@ -112,7 +114,7 @@ public class Report {
                 total = qty * Double.parseDouble(price);
 
                 // add data to row
-                row.add(id);
+                row.add(pID);
                 row.add(desc);
                 row.add(price);
                 row.add(Integer.toString(qty));
@@ -126,6 +128,55 @@ public class Report {
                 qty = 0;
                 total = 0;
             }
+            break;
+        case TRANSFERS:
+            // data to generate
+            String accID;
+            double totalCred = 0, totalDeb = 0, totalTran = 0;
+            // ----------------
+
+            // retrieve transaction data and client data
+            ArrayList<Transaction> arrT = new ArrayList<Transaction>(
+                    ((ArrayList<Transaction>) Storage.readObjects(STORAGE_TYPE.GET_TRAN))); // create copy of array
+            HashMap<String, Client> mapC = (HashMap<String, Client>) Storage.readObjects(STORAGE_TYPE.GET_CUST);
+            //---------------------------------------------
+
+            // for each account, loop through all transactions and see where the account was credited or debited
+            for (Map.Entry<String, Client> elem : mapC.entrySet()) {
+                Account acc = ((Client) elem.getValue()).getAcc();
+                accID = acc.getAccID();
+                row = new ArrayList<String>();
+
+                for (Transaction t : arrT) {
+                    if (t.getClient().getAcc().getAccID().compareTo(accID) == 0) {
+                        if (t.getAmount() < 0) { // if amount < 0 then a refund occurred
+                            totalCred += (-t.getAmount());
+                        } else {
+                            totalDeb += t.getAmount();
+                        }
+                    }
+                }
+
+                totalTran = totalCred + totalDeb;
+
+                // add data to array
+                row.add(accID);
+                row.add(Double.toString(totalCred));
+                row.add(Double.toString(totalDeb));
+                row.add(Double.toString(totalTran));
+                //--------------------------
+
+                // add row to data array
+                data.add(row);
+                //--------------------------------
+
+                // reset shared variables
+                totalCred = 0;
+                totalDeb = 0;
+                totalTran = 0;
+                //--------------------------
+            }
+            // ----------------------------------------------------
             break;
         default:
             break;
@@ -141,7 +192,7 @@ public class Report {
         String report = header;
         for (ArrayList<String> row : data) {
             report += "\r\n";
-            for(String elem: row){
+            for (String elem : row) {
                 report += String.format("%-20s\t\t", elem);
             }
         }
