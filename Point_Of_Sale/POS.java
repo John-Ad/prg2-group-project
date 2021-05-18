@@ -15,8 +15,6 @@ import Point_Of_Sale.Events.Event;
 
 import java.util.Scanner;
 
-
-
 /**
  *  event handler definitions
  */
@@ -27,7 +25,6 @@ public class POS implements Runnable {
     private boolean running;
     private Thread main;
 
-
     public POS() {
         running = true;
         main = new Thread(this);
@@ -35,11 +32,11 @@ public class POS implements Runnable {
     }
 
     private void eventHandler(Event event) {
-        switch(event.evType) {
+        switch (event.evType) {
             case TRANS:
                 TransactionEvent sale = (TransactionEvent) event;
-                if(sale.transaction.getClient().getCard().checkPin()) {
-                    if(sale.transaction.getAmount()<0) {                        //if the amount is negative then the client gets a refund
+                if (sale.transaction.getClient().getCard().checkPin()) {
+                    if (sale.transaction.getAmount() < 0) { //if the amount is negative then the client gets a refund
                         sale.transaction.getClient().getAcc().credit(-sale.transaction.getAmount());
                     } else {
                         sale.transaction.getClient().getAcc().debit(sale.transaction.getAmount());
@@ -47,143 +44,142 @@ public class POS implements Runnable {
                     Storage.addObject(STORAGE_TYPE.STORE_TRAN, sale.transaction);
                 }
         }
-        
-       
-        
+
     }
 
     @Override
-    public void run() {                             //main worker thread
+    public void run() { //main worker thread
         //      testing
 
         //-------------------------------------------
-        
+
         Scanner scanner = TextReadWrite.getScanner();
         String input;
         int option;
 
-
-
         while (running) {
-            System.out.println("Choose an option (number)\n1.\tTransaction\n2.\tStock management\n3.\tCustomer management\n4.\tAccount management\n5.\tEmployee management\n6.\tExit\noption:\t");
+            System.out.println(
+                    "Choose an option (number)\n1.\tTransaction\n2.\tStock management\n3.\tCustomer management\n4.\tAccount management\n5.\tEmployee management\n6.\tExit\noption:\t");
             input = scanner.nextLine();
-            int i=0;
-            switch(NumberConversion.toInt(input)) {
+            int i = 0;
+            switch (NumberConversion.toInt(input)) {
                 case NumberConversion.ERROR:
                     System.out.println("Invalid input");
                     break;
                 case 1:
-                TransactionEvent event = (TransactionEvent)EventFactory.getEvent(EVENT_TYPE.TRANS);
-                event.evType=EVENT_TYPE.TRANS;
-    
-                for (boolean b = true; b == true;) {
-                    System.out.println("1.\tSale\n2.\tRefund: ");
-                    switch (NumberConversion.toInt(TextReadWrite.getScanner().nextLine())) {
-                    case NumberConversion.ERROR:
-                        System.out.println("Invalid input");
-                        break;
-                    case 1:
-                        event.tranType = TRAN_TYPE.SALE;
-                        b = false;
-                        break;
-                    case 2:
-                        event.tranType = TRAN_TYPE.REFUND;
-                        b = false;
-                        break;
-                    }
-                }
-    
-                event.transaction = TransactionGenerator.getTran(event.tranType);
-                eventHandler(event);
-                    break;
-                case 2:
-                    while (i==0) { 
-                        System.out.println("choose an option (number)\n1.\tAdd Stock\n2.\tRemove Stock\n3.\tSearch Stock\n4.\tRetrieve Stock\n5.\tCount\n6.\tExit\noptoin:\t");    //loop for option 2
-                        input = scanner.nextLine();
-                        switch(NumberConversion.toInt(input)) {
+                    TransactionEvent event = (TransactionEvent) EventFactory.getEvent(EVENT_TYPE.TRANS);
+                    event.evType = EVENT_TYPE.TRANS;
+
+                    for (boolean b = true; b == true;) {
+                        System.out.println("1.\tSale\n2.\tRefund: ");
+                        switch (NumberConversion.toInt(TextReadWrite.getScanner().nextLine())) {
                             case NumberConversion.ERROR:
                                 System.out.println("Invalid input");
                                 break;
                             case 1:
-                                running= false;
+                                event.tranType = TRAN_TYPE.SALE;
+                                b = false;
                                 break;
                             case 2:
-                                running= false;
+                                event.tranType = TRAN_TYPE.REFUND;
+                                b = false;
+                                break;
+                        }
+                    }
+
+                    event.transaction = TransactionGenerator.getTran(event.tranType);
+                    eventHandler(event);
+                    break;
+                case 2:
+                    while (i == 0) {
+                        System.out.println(
+                                "choose an option (number)\n1.\tAdd Stock\n2.\tRemove Stock\n3.\tSearch Stock\n4.\tRetrieve Stock\n5.\tCount\n6.\tExit\noptoin:\t"); //loop for option 2
+                        input = scanner.nextLine();
+                        switch (NumberConversion.toInt(input)) {
+                            case NumberConversion.ERROR:
+                                System.out.println("Invalid input");
+                                break;
+                            case 1:
+                                running = false;
+                                break;
+                            case 2:
+                                running = false;
                                 break;
                             case 3:
-                                running= false;
+                                running = false;
                                 break;
                             case 4:
-                                running= false;
+                                running = false;
                                 break;
                             case 5:
-                                running= false;
+                                running = false;
                                 break;
                             case 6:
-                                i=2;
+                                i = 2;
                                 break;
                         }
                     }
                 case 3:
-                    while (i==0) {
-                        System.out.println("choose an option (number)\n1.\tAdd User\n2.\tRemove User\n3.\tSearch User\n4.\tRetrieve User\n5.\tCount User\n6.\t Exit\noption:\t");
+                    while (i == 0) {
+                        System.out.println(
+                                "choose an option (number)\n1.\tAdd Customer\n2.\tRemove Customer\n3.\tSearch Customer\n4.\tRetrieve Customer\n5.\tCount Customer\n6.\t Exit\noption:\t");
                         input = scanner.nextLine();
-                        switch(NumberConversion.toInt(input)) {
+                        switch (NumberConversion.toInt(input)) {
                             case NumberConversion.ERROR:
-                            System.out.println("Invalid input");
-                            break;
-                        case 1:
-        
-                            break;
-                        case 2:
-                            break;
-                        case 3:
-                            break;
-                        case 4:
-                            break;
-                        case 5:
-                            break;
-                        case 6:
-                            i=2;
-                            break;
-                        }                        
-                    }   
-                    i=0;
-              
-            case 4:
-            while (i==0) {
-                System.out.println("choose an option (number)\n1.\tAdd Customer\n2.\tRemove Customer\n3.\tSearch Customer\n4.\tRetrieve Customer\n5.\tCount Customer\n6.\t Exit\noption:\t");
-                input = scanner.nextLine();
-                switch(NumberConversion.toInt(input)) {
-                    case NumberConversion.ERROR:
-                    System.out.println("Invalid input");
-                    break;
-                case 1:
-                    StorageEvent ev = (StorageEvent) EventFactory.getEvent(EVENT_TYPE.STORAGE);
-                    ev.storageType=STORAGE_TYPE.STORE_CUST;
-                    Client client = (Client) UserFactory.getUser(USER_TYPE.CLIENT);
-                    Storage.addObject(STORAGE_TYPE.STORE_CUST, client);
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
+                                System.out.println("Invalid input");
+                                break;
+                            case 1:
+                                StorageEvent ev = (StorageEvent) EventFactory.getEvent(EVENT_TYPE.STORAGE);
+                                ev.storageType = STORAGE_TYPE.STORE_CUST;
+                                Client client = (Client) UserFactory.getUser(USER_TYPE.CLIENT);
+                                Storage.addObject(STORAGE_TYPE.STORE_CUST, client);
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            case 5:
+                                break;
+                            case 6:
+                                i = 2;
+                                break;
+                        }
+                    }
+                    i = 0;
+
                 case 4:
-                    break;
-                case 5:
-                    break;
-                case 6:
-                    i=2;
-                    break;
-                }                        
-            }   
-            i=0;
-        
+                    while (i == 0) {
+                        System.out.println(
+                                "choose an option (number)\n1.\tDeposit\n2.\tWithdraw\n3.\t Exit\noption:\t");
+                        input = scanner.nextLine();
+                        switch (NumberConversion.toInt(input)) {
+                            case NumberConversion.ERROR:
+                                System.out.println("Invalid input");
+                                break;
+                            case 1:
+                                String email;
+                                System.out.println("Enter email");
+                                email = TextReadWrite.getScanner().nextLine();
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            case 5:
+                                break;
+                            case 6:
+                                i = 2;
+                                break;
+                        }
+                    }
+                    i = 0;
+
+            }
         }
+
     }
 }
-}
-
-
-
-
