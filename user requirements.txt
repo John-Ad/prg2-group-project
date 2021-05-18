@@ -146,6 +146,7 @@ dbConnection:
         -nonQry()
 
 Documentation:
-    POS: 
+    POS:
         main loop:
-            option 2 - stock management: 
+            option 2 - stock management : add, remove, search, retrieve, count
+        

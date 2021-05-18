@@ -3,6 +3,7 @@ package Point_Of_Sale;
 import Point_Of_Sale.Events.EVENT_TYPE;
 import Point_Of_Sale.Events.Event;
 import Point_Of_Sale.Events.EventFactory;
+import Point_Of_Sale.Events.StorageEvent;
 import Point_Of_Sale.Events.TransactionEvent;
 import Point_Of_Sale.Storage.STORAGE_TYPE;
 import Point_Of_Sale.Storage.Storage;
@@ -145,13 +146,43 @@ public class POS implements Runnable {
                         case 6:
                             i=2;
                             break;
-                        }                        }
+                        }                        
                     }   
                     i=0;
-            }
+              
+            case 4:
+            while (i==0) {
+                System.out.println("choose an option (number)\n1.\tAdd Customer\n2.\tRemove Customer\n3.\tSearch Customer\n4.\tRetrieve Customer\n5.\tCount Customer\n6.\t Exit\noption:\t");
+                input = scanner.nextLine();
+                switch(NumberConversion.toInt(input)) {
+                    case NumberConversion.ERROR:
+                    System.out.println("Invalid input");
+                    break;
+                case 1:
+                    StorageEvent ev = (StorageEvent) EventFactory.getEvent(EVENT_TYPE.STORAGE);
+                    ev.storageType=STORAGE_TYPE.STORE_CUST;
+                    Client client = (Client) UserFactory.getUser(USER_TYPE.CLIENT);
+                    Storage.addObject(STORAGE_TYPE.STORE_CUST, client);
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    i=2;
+                    break;
+                }                        
+            }   
+            i=0;
         
         }
     }
+}
+}
 
 
 
