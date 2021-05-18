@@ -31,6 +31,10 @@ public class EventFactory {
 
             event.transaction = TransactionGenerator.getTran(event.tranType);
             return event;
+        case STORAGE:
+            return new StorageEvent();
+        case REPORT:
+            return new ReportEvent();
         default:
             return null;
         }

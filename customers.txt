@@ -1,0 +1,4 @@
+Name                	|	Email               	|	Items bought        	|	Total spent         
+
+john                		emailJ              		7                   		385.0               		
+email               		email               		8                   		440.0               		

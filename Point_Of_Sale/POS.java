@@ -30,7 +30,7 @@ public class POS implements Runnable {
     }
 
     private void eventHandler(Event event) {
-        System.out.println(((TransactionEvent)event).tranType);1
+        System.out.println(((TransactionEvent)event).tranType);
         
        
         
