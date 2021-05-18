@@ -55,10 +55,12 @@ public class Report {
                 // loop through transactions and get data
                 for (int i = 0; i < arrC.size(); i++) {
                     if (arrC.get(i).getClient().getEmail().compareTo(email) == 0) {
-                        itemsBought += arrC.get(i).getNumOfItems();
-                        totalSpent += arrC.get(i).getAmount();
-
-                        System.out.println("index: " + i + "; email: " + email);
+                        if (arrC.get(i).getAmount() < 0) {
+                            itemsBought -= arrC.get(i).getNumOfItems();
+                        } else {
+                            itemsBought += arrC.get(i).getNumOfItems();
+                        }
+                        totalSpent += arrC.get(i).getAmount();      //if amount < 0 negative number added
 
                         arrC.remove(i); //remove transaction
                         i--; //reposition index to offset removed elem
@@ -105,7 +107,11 @@ public class Report {
                 for (Transaction t : arrP) {
                     for (Product p : t.getItems()) {
                         if (p.getProdID().compareTo(pID) == 0) {
-                            qty++;
+                            if (t.getAmount() < 0) {        //check if sale or refund
+                                qty--;
+                            } else {
+                                qty++;
+                            }
                         }
                     }
                 }

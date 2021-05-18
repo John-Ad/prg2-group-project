@@ -1,5 +1,5 @@
 Item ID             		Description         		Price               		Qty sold            		Total               
 
-762346              		asfd                		55.0                		4                   		220.0               		
-292223              		dfg                 		55.0                		4                   		220.0               		
-291563              		asdf                		55.0                		7                   		385.0               		
+762346              		asfd                		55.0                		1                   		55.0                		
+292223              		dfg                 		55.0                		3                   		165.0               		
+291563              		asdf                		55.0                		6                   		330.0               		
