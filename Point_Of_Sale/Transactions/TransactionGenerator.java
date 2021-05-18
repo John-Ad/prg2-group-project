@@ -26,8 +26,7 @@ public class TransactionGenerator {
         }
 
         Client client = (Client) UserFactory.getUser(USER_TYPE.CLIENT);
-        map.put(client.getEmail(), client);
-        Storage.writeObjects(STORAGE_TYPE.STORE_CUST, map);
+        Storage.addObject(STORAGE_TYPE.STORE_CUST, client);
 
         return client;
     }
