@@ -1,4 +1,5 @@
 Name                	|	Email               	|	Items bought        	|	Total spent         
 
-john                		emailJ              		7                   		385.0               		
-email               		email               		5                   		275.0               		
+Setson              		email2              		2                   		143.0               		
+john                		emailJ              		0                   		0.0                 		
+email               		email               		0                   		0.0                 		
