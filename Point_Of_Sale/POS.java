@@ -26,7 +26,7 @@ import java.util.Scanner;
 
 // enums
 enum MENUS {
-    MAIN, TRAN, STOCK_MNG, CUST_MNG, ACC_MNG, EMP_MNG;
+    MAIN, TRAN, STOCK_MNG, CUST_MNG, ACC_MNG, EMP_MNG, REPORTS;
 
     public static int toInt(MENUS type) {
         switch (type) {
@@ -42,6 +42,8 @@ enum MENUS {
             return 4;
         case EMP_MNG:
             return 5;
+        case REPORTS:
+            return 6;
         default:
             return 0;
         }
@@ -61,6 +63,8 @@ enum MENUS {
             return ACC_MNG;
         case 5:
             return EMP_MNG;
+        case 6:
+            return REPORTS;
         default:
             return null;
         }
@@ -72,9 +76,10 @@ public class POS implements Runnable {
             "Choose an option (number)\n1.\tTransaction\n2.\tStock management\n3.\tCustomer management\n4.\tAccount management\n5.\tEmployee management\n6.\tExit\noption:\t",
             "choose an option (number)\n1.\tSale\n2.\tRefund: ",
             "choose an option (number)\n1.\tAdd Stock\n2.\tRemove Stock\n3.\tSearch Stock\n4.\tBack\noption:\t",
-            "choose an option (number)\n1.\tAdd Customer\n2.\tRemove Customer\n3.\tSearch Customer\n4.\tBack\noption:\t", };
+            "choose an option (number)\n1.\tAdd Customer\n2.\tRemove Customer\n3.\tSearch Customer\n4.\tBack\noption:\t", 
+            "choose an option (number)\n1.\tAdd Employee\n2.\tRemove Employee\n3.\tSearch Employee\n4.\tBack\noption:\t" };
     private static final ArrayList<HashMap<String, Integer>> optMaps = new ArrayList<>(
-            Arrays.asList(initOptMaps(6), initOptMaps(2), initOptMaps(4), initOptMaps(4)));
+            Arrays.asList(initOptMaps(6), initOptMaps(2), initOptMaps(4), initOptMaps(4), initOptMaps(4)));
 
     private static HashMap<String, Integer> initOptMaps(int size) {
         HashMap<String, Integer> map = new HashMap<>();
@@ -109,6 +114,7 @@ public class POS implements Runnable {
         case STORAGE:
             StorageEvent store = (StorageEvent) event;
             switch (store.storageType) {
+            //  customer storage
             case STORE_CUST:
                 Storage.addObject(store.storageType, (Client) UserFactory.getUser(USER_TYPE.CLIENT));
                 break;
@@ -123,11 +129,15 @@ public class POS implements Runnable {
                 System.out.println("Enter email: ");
                 Storage.remObject(store.storageType, TextReadWrite.getScanner().nextLine());
                 break;
+            // ----------------------
+
+            // product storage
             case STORE_PROD:
                 int opt;
                 while (true) {
                     System.out.println("Perishable (1) or nonperishable(2)");
-                    if ((opt = NumberConversion.toInt(TextReadWrite.getScanner().nextLine())) != NumberConversion.ERROR) {
+                    if ((opt = NumberConversion
+                            .toInt(TextReadWrite.getScanner().nextLine())) != NumberConversion.ERROR) {
                         break;
                     } else {
                         System.out.println("Invalid input!");
@@ -146,10 +156,28 @@ public class POS implements Runnable {
                 System.out.println("Enter product name: ");
                 Storage.remObject(store.storageType, TextReadWrite.getScanner().nextLine());
                 break;
+            // -------------------------
+
+            // employee storage
+            case STORE_EMP:
+                Storage.addObject(store.storageType, (Employee) UserFactory.getUser(USER_TYPE.EMPLOYEE));
+                break;
+            case FIND_EMP:
+                System.out.println("Enter email: ");
+                Employee fEmp = (Employee) Storage.findObject(store.storageType, TextReadWrite.getScanner().nextLine());
+                if (fEmp != null) {
+                    System.out.println(fEmp.toString());
+                }
+                break;
+            case REM_EMP:
+                System.out.println("Enter email: ");
+                Storage.remObject(store.storageType, TextReadWrite.getScanner().nextLine());
+                break;
+            // -------------------------
             }
-            break;
         }
     }
+
 
     @Override
     public void run() { //main worker thread
@@ -194,6 +222,11 @@ public class POS implements Runnable {
                         StorageEvent eventC = (StorageEvent) EventFactory.getEvent(EVENT_TYPE.STORAGE);
                         eventC.storageType = STORAGE_TYPE.custFromInt(optMaps.get(currentMenu).get(input));
                         event = eventC;
+                        break;
+                    case EMP_MNG:
+                        StorageEvent eventE = (StorageEvent) EventFactory.getEvent(EVENT_TYPE.STORAGE);
+                        eventE.storageType = STORAGE_TYPE.empFromInt(optMaps.get(currentMenu).get(input));
+                        event = eventE;
                         break;
                     }
 

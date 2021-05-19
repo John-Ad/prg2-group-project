@@ -84,4 +84,17 @@ public enum STORAGE_TYPE {
             return null;
         }
     }
+
+    public static STORAGE_TYPE empFromInt(int opt) {
+        switch (opt) {
+        case 1:
+            return STORE_EMP;
+        case 2:
+            return REM_EMP;
+        case 3:
+            return FIND_EMP;
+        default:
+            return null;
+        }
+    }
 }
