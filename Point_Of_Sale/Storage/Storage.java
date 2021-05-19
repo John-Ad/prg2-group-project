@@ -103,6 +103,12 @@ public class Storage {
             arr.add(t);
             Storage.writeObjects(type, arr);
             break;
+        case STORE_EMP:
+            Employee e = (Employee) item; //cast object to correct type
+            HashMap<String, Employee> emap = (HashMap<String, Employee>) Storage.readObjects(type); //retrieve stored data
+            emap.put(e.getEmail(), e); //add item to others
+            Storage.writeObjects(type, emap); // store data
+            break;
         }
     }
 

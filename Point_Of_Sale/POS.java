@@ -38,12 +38,10 @@ enum MENUS {
             return 2;
         case CUST_MNG:
             return 3;
-        case ACC_MNG:
-            return 4;
         case EMP_MNG:
-            return 5;
+            return 4;
         case REPORTS:
-            return 6;
+            return 5;
         default:
             return 0;
         }
@@ -60,10 +58,8 @@ enum MENUS {
         case 3:
             return CUST_MNG;
         case 4:
-            return ACC_MNG;
-        case 5:
             return EMP_MNG;
-        case 6:
+        case 5:
             return REPORTS;
         default:
             return null;
@@ -73,7 +69,7 @@ enum MENUS {
 
 public class POS implements Runnable {
     private static final String menus[] = {
-            "Choose an option (number)\n1.\tTransaction\n2.\tStock management\n3.\tCustomer management\n4.\tAccount management\n5.\tEmployee management\n6.\tExit\noption:\t",
+            "Choose an option (number)\n1.\tTransaction\n2.\tStock management\n3.\tCustomer management\n4.\tEmployee management\n5.\tReport management\n6.\tExit\noption:\t",
             "choose an option (number)\n1.\tSale\n2.\tRefund: ",
             "choose an option (number)\n1.\tAdd Stock\n2.\tRemove Stock\n3.\tSearch Stock\n4.\tBack\noption:\t",
             "choose an option (number)\n1.\tAdd Customer\n2.\tRemove Customer\n3.\tSearch Customer\n4.\tBack\noption:\t", 
