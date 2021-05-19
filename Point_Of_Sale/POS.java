@@ -175,6 +175,7 @@ public class POS implements Runnable {
                 break;
             // -------------------------
             }
+            break;
         case REPORT:
             ReportEvent rep = (ReportEvent) event;
             rep.report = new Report(rep.reportType);
