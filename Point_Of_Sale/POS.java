@@ -3,11 +3,14 @@ package Point_Of_Sale;
 import Point_Of_Sale.Events.EVENT_TYPE;
 import Point_Of_Sale.Events.Event;
 import Point_Of_Sale.Events.EventFactory;
+import Point_Of_Sale.Events.ReportEvent;
 import Point_Of_Sale.Events.StorageEvent;
 import Point_Of_Sale.Events.TransactionEvent;
 import Point_Of_Sale.Products.PRODUCT_TYPE;
 import Point_Of_Sale.Products.Product;
 import Point_Of_Sale.Products.ProductFactory;
+import Point_Of_Sale.Reports.REPORT_TYPE;
+import Point_Of_Sale.Reports.Report;
 import Point_Of_Sale.Storage.STORAGE_TYPE;
 import Point_Of_Sale.Storage.Storage;
 import Point_Of_Sale.Transactions.TRAN_TYPE;
@@ -26,7 +29,7 @@ import java.util.Scanner;
 
 // enums
 enum MENUS {
-    MAIN, TRAN, STOCK_MNG, CUST_MNG, ACC_MNG, EMP_MNG, REPORTS;
+    MAIN, TRAN, STOCK_MNG, CUST_MNG, EMP_MNG, REPORTS;
 
     public static int toInt(MENUS type) {
         switch (type) {
@@ -172,9 +175,23 @@ public class POS implements Runnable {
                 break;
             // -------------------------
             }
+        case REPORT:
+            ReportEvent rep = (ReportEvent) event;
+            rep.report = new Report(rep.reportType);
+
+            try {
+                if (rep.reportType == REPORT_TYPE.READ_CUSTOMERS || rep.reportType == REPORT_TYPE.READ_ITEMS
+                        || rep.reportType == REPORT_TYPE.READ_TRANSFERS) {
+                    System.out.print(rep.report.getOldReport());
+                } else {
+                    rep.report.createNewReport();
+                }
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+            break;
         }
     }
-
 
     @Override
     public void run() { //main worker thread
@@ -224,6 +241,11 @@ public class POS implements Runnable {
                         StorageEvent eventE = (StorageEvent) EventFactory.getEvent(EVENT_TYPE.STORAGE);
                         eventE.storageType = STORAGE_TYPE.empFromInt(optMaps.get(currentMenu).get(input));
                         event = eventE;
+                        break;
+                    case REPORTS:
+                        ReportEvent eventR = (ReportEvent) EventFactory.getEvent(EVENT_TYPE.REPORT);
+                        eventR.reportType = REPORT_TYPE.fromInt(optMaps.get(currentMenu).get(input));
+                        event = eventR;
                         break;
                     }
 
