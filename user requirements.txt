@@ -149,4 +149,7 @@ Documentation:
     POS:
         main loop:
             option 2 - stock management : add, remove, search, retrieve, count
+
+        Report:
+            op
         

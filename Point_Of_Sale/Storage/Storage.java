@@ -11,6 +11,7 @@ import java.util.HashMap;
 import Point_Of_Sale.Products.Product;
 import Point_Of_Sale.Transactions.Transaction;
 import Point_Of_Sale.Users.Client;
+import Point_Of_Sale.Users.Employee;
 
 public class Storage {
     private Storage() {
@@ -51,26 +52,48 @@ public class Storage {
     }
 
     public static Object findObject(STORAGE_TYPE type, Object item) {
-        try {
-
-        } catch (Exception ex) {
-
+        switch (type) {
+        case FIND_CUST:
+            HashMap<String, Client> cmap = (HashMap<String, Client>) Storage.readObjects(type); //retrieve stored data
+            if (cmap.containsKey((String) item)) {
+                return cmap.get((String) item);
+            }else{
+                System.out.println("Customer not found");
+            }
+            break;
+        case FIND_PROD:
+            HashMap<String, Product> pmap = (HashMap<String, Product>) Storage.readObjects(type); //retrieve stored data
+            if (pmap.containsKey((String) item)) {
+                return pmap.get((String) item);
+            }else{
+                System.out.println("Product not found");
+            }
+            break;
+        case FIND_EMP:
+            HashMap<String, Employee> emap = (HashMap<String, Employee>) Storage.readObjects(type); //retrieve stored data
+            if (emap.containsKey((String) item)) {
+                return emap.get((String) item);
+            }else{
+                System.out.println("Employee not found");
+            }
+            break;
+        default:
+            return null;
         }
-
         return null;
     }
 
     public static void addObject(STORAGE_TYPE type, Object item) {
         switch (type) {
         case STORE_CUST:
-            Client c = (Client) item;       //cast object to correct type
-            HashMap<String, Client> cmap = (HashMap<String, Client>) Storage.readObjects(type);  //retrieve stored data
-            cmap.put(c.getEmail(), c);       //add item to others
-            Storage.writeObjects(type, cmap);    // store data
+            Client c = (Client) item; //cast object to correct type
+            HashMap<String, Client> cmap = (HashMap<String, Client>) Storage.readObjects(type); //retrieve stored data
+            cmap.put(c.getEmail(), c); //add item to others
+            Storage.writeObjects(type, cmap); // store data
             break;
         case STORE_PROD:
             Product p = (Product) item;
-            HashMap<String, Product> pmap = (HashMap<String, Product>) Storage.readObjects(type);  //retrieve stored data
+            HashMap<String, Product> pmap = (HashMap<String, Product>) Storage.readObjects(type); //retrieve stored data
             pmap.put(p.getName(), p);
             Storage.writeObjects(type, pmap);
             break;
@@ -80,6 +103,25 @@ public class Storage {
             arr.add(t);
             Storage.writeObjects(type, arr);
             break;
+        }
+    }
+
+    public static void remObject(STORAGE_TYPE type, Object item) {
+        switch (type) {
+            case REM_CUST:
+                HashMap<String, Client> cmap = (HashMap<String, Client>) Storage.readObjects(type); //retrieve stored data
+                cmap.remove((String) item);
+                Storage.writeObjects(type, cmap);
+                break;
+            case REM_EMP:
+                HashMap<String, Employee> emap = (HashMap<String, Employee>) Storage.readObjects(type); //retrieve stored data
+                emap.remove((String) item);
+                Storage.writeObjects(type, emap);
+            case REM_PROD:
+                HashMap<String, Product> pmap = (HashMap<String, Product>) Storage.readObjects(type); //retrieve stored data
+                pmap.remove((String) item);
+                Storage.writeObjects(type, pmap);
+                break;
         }
     }
 }
