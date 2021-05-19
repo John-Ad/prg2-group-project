@@ -221,32 +221,32 @@ public class POS implements Runnable {
                     Event event = null;
 
                     switch (MENUS.fromInt(currentMenu)) {
-                    case TRAN:
-                        TransactionEvent eventT = (TransactionEvent) EventFactory.getEvent(EVENT_TYPE.TRANS);
-                        eventT.tranType = TRAN_TYPE.fromInt(optMaps.get(currentMenu).get(input));
-                        eventT.transaction = TransactionGenerator.getTran(eventT.tranType);
-                        event = eventT;
-                        break;
-                    case STOCK_MNG:
-                        StorageEvent eventS = (StorageEvent) EventFactory.getEvent(EVENT_TYPE.STORAGE);
-                        eventS.storageType = STORAGE_TYPE.prodFromInt(optMaps.get(currentMenu).get(input));
-                        event = eventS;
-                        break;
-                    case CUST_MNG:
-                        StorageEvent eventC = (StorageEvent) EventFactory.getEvent(EVENT_TYPE.STORAGE);
-                        eventC.storageType = STORAGE_TYPE.custFromInt(optMaps.get(currentMenu).get(input));
-                        event = eventC;
-                        break;
-                    case EMP_MNG:
-                        StorageEvent eventE = (StorageEvent) EventFactory.getEvent(EVENT_TYPE.STORAGE);
-                        eventE.storageType = STORAGE_TYPE.empFromInt(optMaps.get(currentMenu).get(input));
-                        event = eventE;
-                        break;
-                    case REPORTS:
-                        ReportEvent eventR = (ReportEvent) EventFactory.getEvent(EVENT_TYPE.REPORT);
-                        eventR.reportType = REPORT_TYPE.fromInt(optMaps.get(currentMenu).get(input));
-                        event = eventR;
-                        break;
+                        case TRAN:
+                            TransactionEvent eventT = (TransactionEvent) EventFactory.getEvent(EVENT_TYPE.TRANS);
+                            eventT.tranType = TRAN_TYPE.fromInt(optMaps.get(currentMenu).get(input));
+                            eventT.transaction = TransactionGenerator.getTran(eventT.tranType);
+                            event = eventT;
+                            break;
+                        case STOCK_MNG:
+                            StorageEvent eventS = (StorageEvent) EventFactory.getEvent(EVENT_TYPE.STORAGE);
+                            eventS.storageType = STORAGE_TYPE.prodFromInt(optMaps.get(currentMenu).get(input));
+                            event = eventS;
+                            break;
+                        case CUST_MNG:
+                            StorageEvent eventC = (StorageEvent) EventFactory.getEvent(EVENT_TYPE.STORAGE);
+                            eventC.storageType = STORAGE_TYPE.custFromInt(optMaps.get(currentMenu).get(input));
+                            event = eventC;
+                            break;
+                        case EMP_MNG:
+                            StorageEvent eventE = (StorageEvent) EventFactory.getEvent(EVENT_TYPE.STORAGE);
+                            eventE.storageType = STORAGE_TYPE.empFromInt(optMaps.get(currentMenu).get(input));
+                            event = eventE;
+                            break;
+                        case REPORTS:
+                            ReportEvent eventR = (ReportEvent) EventFactory.getEvent(EVENT_TYPE.REPORT);
+                            eventR.reportType = REPORT_TYPE.fromInt(optMaps.get(currentMenu).get(input));
+                            event = eventR;
+                            break;
                     }
 
                     eventHandler(event);
