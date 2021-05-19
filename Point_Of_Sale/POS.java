@@ -74,10 +74,9 @@ public class POS implements Runnable {
             "choose an option (number)\n1.\tAdd Stock\n2.\tRemove Stock\n3.\tSearch Stock\n4.\tBack\noption:\t",
             "choose an option (number)\n1.\tAdd Customer\n2.\tRemove Customer\n3.\tSearch Customer\n4.\tBack\noption:\t", 
             "choose an option (number)\n1.\tAdd Employee\n2.\tRemove Employee\n3.\tSearch Employee\n4.\tBack\noption:\t", 
-            "choose an option (number)\n1.\tCreate Items Report\n2.\tCreate Transfers Report\n3.\tCreate Customers Report\n4.\tBack\noption:\t", 
-            "choose an option (number)\n1.\tRead Items Report\n2.\tRead Transfers Report\n3.\tRead Customers Report\n4.\tBack\noption:\t" };
+            "choose an option (number)\n1.\tCreate Items Report\n2.\tCreate Transfers Report\n3.\tCreate Customers Report\n4.\tRead Items Report\n5.\tRead Transfers Report\n6.\tRead Customers Report\n7.\tBack\noption:\t" };
     private static final ArrayList<HashMap<String, Integer>> optMaps = new ArrayList<>(
-            Arrays.asList(initOptMaps(6), initOptMaps(2), initOptMaps(4), initOptMaps(4), initOptMaps(4), initOptMaps(4)));
+            Arrays.asList(initOptMaps(6), initOptMaps(2), initOptMaps(4), initOptMaps(4), initOptMaps(4), initOptMaps(7)));
 
     private static HashMap<String, Integer> initOptMaps(int size) {
         HashMap<String, Integer> map = new HashMap<>();
