@@ -9,11 +9,11 @@ public class EventFactory {
     public static Event getEvent(EVENT_TYPE type) {
         switch (type) {
         case TRANS:
-             return new TransactionEvent();
+             return new TransactionEvent(type);
         case STORAGE:
-            return new StorageEvent();
+            return new StorageEvent(type);
         case REPORT:
-            return new ReportEvent();
+            return new ReportEvent(type);
         default:
             return null;
         }
