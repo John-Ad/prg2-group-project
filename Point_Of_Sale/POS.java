@@ -29,7 +29,7 @@ import java.util.Scanner;
 
 // enums
 enum MENUS {
-    MAIN, TRAN, STOCK_MNG, CUST_MNG, EMP_MNG, REPORTS;
+    MAIN, TRAN, STOCK_MNG, CUST_MNG, EMP_MNG, REPORTS, EXIT;
 
     public static int toInt(MENUS type) {
         switch (type) {
@@ -45,6 +45,8 @@ enum MENUS {
             return 4;
         case REPORTS:
             return 5;
+        case EXIT:
+            return 999;
         default:
             return 0;
         }
@@ -64,6 +66,8 @@ enum MENUS {
             return EMP_MNG;
         case 5:
             return REPORTS;
+        case 999:
+            return EXIT;
         default:
             return null;
         }
@@ -73,19 +77,20 @@ enum MENUS {
 public class POS implements Runnable {
     private static final String menus[] = {
             "Choose an option (number)\n1.\tTransaction\n2.\tStock management\n3.\tCustomer management\n4.\tEmployee management\n5.\tReport management\n6.\tExit\noption:\t",
-            "choose an option (number)\n1.\tSale\n2.\tRefund: ",
+            "choose an option (number)\n1.\tSale\n2.\tRefund\n3.\tBack\nOption: ",
             "choose an option (number)\n1.\tAdd Stock\n2.\tRemove Stock\n3.\tSearch Stock\n4.\tBack\noption:\t",
-            "choose an option (number)\n1.\tAdd Customer\n2.\tRemove Customer\n3.\tSearch Customer\n4.\tBack\noption:\t", 
-            "choose an option (number)\n1.\tAdd Employee\n2.\tRemove Employee\n3.\tSearch Employee\n4.\tBack\noption:\t", 
+            "choose an option (number)\n1.\tAdd Customer\n2.\tRemove Customer\n3.\tSearch Customer\n4.\tBack\noption:\t",
+            "choose an option (number)\n1.\tAdd Employee\n2.\tRemove Employee\n3.\tSearch Employee\n4.\tBack\noption:\t",
             "choose an option (number)\n1.\tCreate Items Report\n2.\tCreate Transfers Report\n3.\tCreate Customers Report\n4.\tRead Items Report\n5.\tRead Transfers Report\n6.\tRead Customers Report\n7.\tBack\noption:\t" };
-    private static final ArrayList<HashMap<String, Integer>> optMaps = new ArrayList<>(
-            Arrays.asList(initOptMaps(6), initOptMaps(2), initOptMaps(4), initOptMaps(4), initOptMaps(4), initOptMaps(7)));
+    private static final ArrayList<HashMap<String, Integer>> optMaps = new ArrayList<>(Arrays.asList(initOptMaps(6),
+            initOptMaps(3), initOptMaps(4), initOptMaps(4), initOptMaps(4), initOptMaps(7)));
 
     private static HashMap<String, Integer> initOptMaps(int size) {
         HashMap<String, Integer> map = new HashMap<>();
-        for (int i = 1; i <= size; i++) {
+        for (int i = 1; i < size; i++) {
             map.put(Integer.toString(i), i);
         }
+        map.put(Integer.toString(size), MENUS.toInt(MENUS.EXIT));
         return map;
     }
 
@@ -212,16 +217,21 @@ public class POS implements Runnable {
 
             input = TextReadWrite.getScanner().nextLine();
 
-            if (optMaps.get(currentMenu).containsKey(input)) {
-                if (currentMenu == MENUS.toInt(MENUS.MAIN)) { // if main menu, change menu
-                    if (optMaps.get(currentMenu).get(input) == 7) { // exit application
-                        return;
+            if (optMaps.get(currentMenu).containsKey(input)) {      // check if input is valid
+                if (MENUS.fromInt(optMaps.get(currentMenu).get(input)) == MENUS.EXIT) {     // check if user choose to exit/go back
+                    if (menuList.size() > 1) {      // if size > 1 then go to previous menu
+                        menuList.remove(menuList.size() - 1);
+                        currentMenu = menuList.get(menuList.size() - 1);
+                    } else {        // exit application
+                        running = false;
                     }
-                    currentMenu = optMaps.get(currentMenu).get(input);
-                } else { // start event
-                    Event event = null;
+                } else {
+                    if (currentMenu == MENUS.toInt(MENUS.MAIN)) { // if main menu, change menu
+                        currentMenu = optMaps.get(currentMenu).get(input);
+                    } else { // start event
+                        Event event = null;
 
-                    switch (MENUS.fromInt(currentMenu)) {
+                        switch (MENUS.fromInt(currentMenu)) {
                         case TRAN:
                             TransactionEvent eventT = (TransactionEvent) EventFactory.getEvent(EVENT_TYPE.TRANS);
                             eventT.tranType = TRAN_TYPE.fromInt(optMaps.get(currentMenu).get(input));
@@ -248,12 +258,15 @@ public class POS implements Runnable {
                             eventR.reportType = REPORT_TYPE.fromInt(optMaps.get(currentMenu).get(input));
                             event = eventR;
                             break;
-                    }
+                        default:
+                            break;
+                        }
 
-                    eventHandler(event);
+                        eventHandler(event);
+                    }
                 }
             } else {
-                System.out.print("invalid Input");
+                System.out.print("invalid Input!\n");
             }
         }
     }
