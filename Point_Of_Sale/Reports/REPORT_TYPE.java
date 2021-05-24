@@ -1,14 +1,15 @@
 package Point_Of_Sale.Reports;
 
+// enumeration of report types
 public enum REPORT_TYPE {
     ITEMS,
     TRANSFERS,
     CUSTOMERS,
     READ_ITEMS,
     READ_TRANSFERS,
-    READ_CUSTOMERS;
+    READ_CUSTOMERS;     // different actions that a report can take
 
-    public static String getFileName(REPORT_TYPE type) {
+    public static String getFileName(REPORT_TYPE type) {    // get filename based on type provided
         switch (type) {
         case ITEMS:
             return "items.txt";
@@ -23,12 +24,12 @@ public enum REPORT_TYPE {
         case READ_CUSTOMERS:
             return "customers.txt";
         default:
-            return "";
+            return "";  // if type not listed above return empty string
         }
     }
 
-    public static String getHeader(REPORT_TYPE type) {
-        switch (type) {
+    public static String getHeader(REPORT_TYPE type) {      // get a specific header for report based on the type provided
+        switch (type) {         
         case ITEMS:
             return String.format("%-20s\t\t%-20s\t\t%-20s\t\t%-20s\t\t%-20s\n", "Item ID", "Description", "Price",
                     "Qty sold", "Total");
@@ -43,7 +44,7 @@ public enum REPORT_TYPE {
         }
     }
 
-    public static REPORT_TYPE fromInt(int opt) {
+    public static REPORT_TYPE fromInt(int opt) {    // return a report type based on the integer provided
         switch (opt) {
         case 1:
             return ITEMS;

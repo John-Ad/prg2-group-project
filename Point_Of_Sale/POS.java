@@ -24,6 +24,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 // "Choose an option (number)\n1.\tTransaction\n2.\tStock management\n3.\tCustomer management\n4.\tAccount management\n5.\tEmployee management\n6.\tExit\noption:\t");
 
@@ -75,6 +78,7 @@ enum MENUS {
 }
 
 public class POS implements Runnable {
+
     private static final String menus[] = {
             "Choose an option (number)\n1.\tTransaction\n2.\tStock management\n3.\tCustomer management\n4.\tEmployee management\n5.\tReport management\n6.\tExit\noption:\t",
             "choose an option (number)\n1.\tSale\n2.\tRefund\n3.\tBack\nOption: ",
@@ -118,15 +122,17 @@ public class POS implements Runnable {
             break;
         case STORAGE:
             StorageEvent store = (StorageEvent) event;
+
+            // cust storage
             switch (store.storageType) {
             //  customer storage
-            case STORE_CUST:
+            case STORE_CUST:    // add cust
                 Client addCust = (Client) UserFactory.getUser(USER_TYPE.CLIENT);
                 if (addCust != null) {
                     Storage.addObject(store.storageType, addCust);
                 }
                 break;
-            case FIND_CUST:
+            case FIND_CUST:     // find cust
                 System.out.println("Enter email: ");
                 Client fClient = (Client) Storage.findObject(store.storageType, TextReadWrite.getScanner().nextLine());
                 if (fClient != null) {
@@ -135,15 +141,16 @@ public class POS implements Runnable {
                     System.out.println("Customer not found");
                 }
                 break;
-            case REM_CUST:
+            case REM_CUST:      // remove cust
                 System.out.println("Enter email: ");
                 Storage.remObject(store.storageType, TextReadWrite.getScanner().nextLine());
                 break;
             // ----------------------
 
             // product storage
-            case STORE_PROD:
+            case STORE_PROD:        // add prod
                 int opt;
+                // loop until valid input entered
                 while (true) {
                     System.out.println("Perishable (1) or nonperishable(2)");
                     if ((opt = NumberConversion
@@ -158,7 +165,7 @@ public class POS implements Runnable {
                     Storage.addObject(store.storageType, addProd);
                 }
                 break;
-            case FIND_PROD:
+            case FIND_PROD:     // find prod
                 System.out.println("Enter product name: ");
                 Product fProd = (Product) Storage.findObject(store.storageType, TextReadWrite.getScanner().nextLine());
                 if (fProd != null) {
@@ -167,11 +174,11 @@ public class POS implements Runnable {
                     System.out.println("product not found");
                 }
                 break;
-            case REM_PROD:
+            case REM_PROD:      // remove prod
                 System.out.println("Enter product name: ");
                 Storage.remObject(store.storageType, TextReadWrite.getScanner().nextLine());
                 break;
-            case INC_PROD:
+            case INC_PROD:      // increase product quantity
                 System.out.println("Enter product name: ");
                 Product incProd = (Product) Storage.findObject(STORAGE_TYPE.FIND_PROD, TextReadWrite.getScanner().nextLine());
                 if (incProd == null) {
@@ -180,6 +187,7 @@ public class POS implements Runnable {
                 }
                 String input;
                 int qty;
+                // loop until valid input provided
                 while (true) {
                     System.out.println("Number of items to add: ");
                     input = TextReadWrite.getScanner().nextLine();
@@ -191,20 +199,22 @@ public class POS implements Runnable {
                 }
                 qty+=incProd.getQty();
                 incProd.setQty(qty);
+                // first remove old object
                 Storage.remObject(STORAGE_TYPE.REM_PROD, incProd.getName());
+                //  save updated object
                 Storage.addObject(STORAGE_TYPE.STORE_PROD, incProd);
 
                 break;
             // -------------------------
 
             // employee storage
-            case STORE_EMP:
+            case STORE_EMP: // add emp
                 Employee addEmp = (Employee) UserFactory.getUser(USER_TYPE.EMPLOYEE);
                 if (addEmp != null) {
                     Storage.addObject(store.storageType, addEmp);
                 }
                 break;
-            case FIND_EMP:
+            case FIND_EMP:  //find emp
                 System.out.println("Enter email: ");
                 Employee fEmp = (Employee) Storage.findObject(store.storageType, TextReadWrite.getScanner().nextLine());
                 if (fEmp != null) {
@@ -213,7 +223,7 @@ public class POS implements Runnable {
                     System.out.println("Employee not found");
                 }
                 break;
-            case REM_EMP:
+            case REM_EMP:   //remove emp
                 System.out.println("Enter email: ");
                 Storage.remObject(store.storageType, TextReadWrite.getScanner().nextLine());
                 break;
@@ -225,6 +235,7 @@ public class POS implements Runnable {
             rep.report = new Report(rep.reportType);
 
             try {
+                // read report or create new report depending on report type
                 if (rep.reportType == REPORT_TYPE.READ_CUSTOMERS || rep.reportType == REPORT_TYPE.READ_ITEMS
                         || rep.reportType == REPORT_TYPE.READ_TRANSFERS) {
                     System.out.print(rep.report.getOldReport());
@@ -240,6 +251,12 @@ public class POS implements Runnable {
 
     @Override
     public void run() { //main worker thread
+        ArrayList<Product> lowStock=null;
+
+        //  executor service will execute a single thread which checks stock
+        ExecutorService exServ = Executors.newSingleThreadExecutor();
+        Future f=exServ.submit(new StockChecker()); // result will be saved in f
+;
         Scanner scanner = TextReadWrite.getScanner();
         ArrayList<Integer> menuList = new ArrayList<>(); //keeps track of menus
         String input;
@@ -248,6 +265,25 @@ public class POS implements Runnable {
 
         while (running) {
 
+            //  check if stockchecker found low stock, then restart it
+            try{
+                if (f.isDone()) {
+                    lowStock = (ArrayList<Product>) f.get();
+                    f = exServ.submit(new StockChecker());
+                }
+            } catch (Exception ex) {
+                System.out.println("checking stock");
+            }
+
+            // if there was low stock display it
+            if (lowStock != null && lowStock.size() > 0) {
+                System.out.println("\t" + lowStock.size() + " have low stock:");
+                for (Product p : lowStock) {
+                    System.out.println(p.toString());
+                }
+            }
+
+            //  if current menu is main menu add chosen menu to menu list
             if (menuList.size() == 0 || menuList.get(menuList.size() - 1) != currentMenu) {
                 menuList.add(currentMenu); // add menu to end of array
             }
@@ -257,14 +293,14 @@ public class POS implements Runnable {
             input = scanner.nextLine();
 
             if (optMaps.get(currentMenu).containsKey(input)) {      // check if input is valid
-                if (MENUS.fromInt(optMaps.get(currentMenu).get(input)) == MENUS.EXIT) {     // check if user choose to exit/go back
+                if (MENUS.fromInt(optMaps.get(currentMenu).get(input)) == MENUS.EXIT) {     // check if user chose to exit/go back
                     if (menuList.size() > 1) {      // if size > 1 then go to previous menu
-                        menuList.remove(menuList.size() - 1);
-                        currentMenu = menuList.get(menuList.size() - 1);
+                        menuList.remove(menuList.size() - 1);   // remove current menu from list 
+                        currentMenu = menuList.get(menuList.size() - 1);    // set current menu to prev menu in list
                     } else {        // exit application
                         running = false;
                     }
-                } else {
+                } else {    // user was chose an option other than EXIT in current menu
                     if (currentMenu == MENUS.toInt(MENUS.MAIN)) { // if main menu, change menu
                         currentMenu = optMaps.get(currentMenu).get(input);
                     } else { // start event
@@ -272,28 +308,28 @@ public class POS implements Runnable {
 
                         //  each case represents a different event taking place
                         switch (MENUS.fromInt(currentMenu)) {
-                        case TRAN:
+                        case TRAN:      // transaction eg sale refund
                             TransactionEvent eventT = (TransactionEvent) EventFactory.getEvent(EVENT_TYPE.TRANS);
                             eventT.tranType = TRAN_TYPE.fromInt(optMaps.get(currentMenu).get(input));
                             eventT.transaction = TransactionGenerator.getTran(eventT.tranType);
                             event = eventT;
                             break;
-                        case STOCK_MNG:
+                        case STOCK_MNG:     // goes to stock management options
                             StorageEvent eventS = (StorageEvent) EventFactory.getEvent(EVENT_TYPE.STORAGE);
                             eventS.storageType = STORAGE_TYPE.prodFromInt(optMaps.get(currentMenu).get(input));
                             event = eventS;
                             break;
-                        case CUST_MNG:
+                        case CUST_MNG:      // goes to customer management options
                             StorageEvent eventC = (StorageEvent) EventFactory.getEvent(EVENT_TYPE.STORAGE);
                             eventC.storageType = STORAGE_TYPE.custFromInt(optMaps.get(currentMenu).get(input));
                             event = eventC;
                             break;
-                        case EMP_MNG:
+                        case EMP_MNG:       // goes to employee management options
                             StorageEvent eventE = (StorageEvent) EventFactory.getEvent(EVENT_TYPE.STORAGE);
                             eventE.storageType = STORAGE_TYPE.empFromInt(optMaps.get(currentMenu).get(input));
                             event = eventE;
                             break;
-                        case REPORTS:
+                        case REPORTS:       // goes to report management options
                             ReportEvent eventR = (ReportEvent) EventFactory.getEvent(EVENT_TYPE.REPORT);
                             eventR.reportType = REPORT_TYPE.fromInt(optMaps.get(currentMenu).get(input));
                             event = eventR;
@@ -302,7 +338,7 @@ public class POS implements Runnable {
                             break;
                         }
 
-                        eventHandler(event);
+                        eventHandler(event);        // pass event to event handler
                     }
                 }
             } else {

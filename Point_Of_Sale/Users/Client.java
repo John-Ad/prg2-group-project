@@ -3,9 +3,11 @@ package Point_Of_Sale.Users;
 import Point_Of_Sale.Account;
 import Point_Of_Sale.Card;
 
-public class Client extends User {
+public class Client extends User { 
+    //instance variables
     private Account account;
 
+    // constructor
     public Client() {
         super();
         account = new Account();
@@ -25,7 +27,9 @@ public class Client extends User {
         super(id, name, email);
         account = acc;
     }
+    //------------------------------------------------
 
+    // getters/setters
     public Account getAcc() {
         return this.account;
     }
@@ -37,4 +41,5 @@ public class Client extends User {
     public Card getCard() {
         return this.account.getCard();
     }
+    //-----------------------------------
 }

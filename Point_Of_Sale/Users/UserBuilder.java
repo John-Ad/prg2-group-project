@@ -22,6 +22,7 @@ public class UserBuilder {
         System.out.print("\nenter email: ");
         email = TextReadWrite.getScanner().nextLine();
 
+        // check if object exists; return null if it does
         if (Storage.findObject(STORAGE_TYPE.FIND_CUST, email) != null
                 || Storage.findObject(STORAGE_TYPE.FIND_EMP, email) != null) {
             System.out.println("user with that email address already exists!");
@@ -38,13 +39,14 @@ public class UserBuilder {
 
         //obtain general data; build and return client
         ArrayList<String> uData = buildUserDetails();
-        if (uData == null) {
+        if (uData == null) {        // if null user already exists
             return null;
         }
 
         return new Client(uData.get(0), uData.get(1), uData.get(2), account);
     }
 
+    // build up employee data
     public static Employee buildEmployee() {
         //obtain general data
         ArrayList<String> uData = buildUserDetails();
@@ -59,6 +61,7 @@ public class UserBuilder {
         System.out.print("enter tax number: ");
         reg = TextReadWrite.getScanner().nextLine();
         
+        // loop until valid salary entered
         while (true) {
             System.out.print("enter salary: ");
             if ((salary = NumberConversion.toDouble(TextReadWrite.getScanner().nextLine())) != NumberConversion.ERROR) {

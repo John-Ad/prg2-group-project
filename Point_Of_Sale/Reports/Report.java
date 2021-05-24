@@ -1,10 +1,8 @@
 package Point_Of_Sale.Reports;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -16,11 +14,13 @@ import Point_Of_Sale.Storage.Storage;
 import Point_Of_Sale.Transactions.Transaction;
 import Point_Of_Sale.Users.Client;
 
-public class Report {
+public class Report {       // contains all methods/attributes to manipulate a report
+    // instance variables
     private REPORT_TYPE type;
 
     private String header;
     private ArrayList<ArrayList<String>> data;
+    //---------------------------------------
 
     public Report(REPORT_TYPE type) {
         this.type = type;
@@ -28,9 +28,9 @@ public class Report {
         this.data = new ArrayList<ArrayList<String>>();
     }
 
-    private void generateData() {
-        data.clear();
-        ArrayList<String> row;
+    private void generateData() {   // generate report data
+        data.clear();           // clear current data 
+        ArrayList<String> row;  // each row represents a list values data about 1 item
 
         switch (this.type) {
         case CUSTOMERS:
@@ -163,7 +163,7 @@ public class Report {
                     }
                 }
 
-                totalTran = totalCred + totalDeb;
+                totalTran = totalCred + totalDeb;       // set total transfers
 
                 // add data to array
                 row.add(accID);
@@ -209,7 +209,7 @@ public class Report {
 
     public String getOldReport() throws Exception {
         String report = "";
-        Scanner scanner = new Scanner(new File(REPORT_TYPE.getFileName(type)));
+        Scanner scanner = new Scanner(new File(REPORT_TYPE.getFileName(type))); // scanner that reads files
 
         // read file line by line
         while (scanner.hasNext()) {

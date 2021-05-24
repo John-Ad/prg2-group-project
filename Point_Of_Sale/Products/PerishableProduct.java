@@ -1,8 +1,11 @@
 package Point_Of_Sale.Products;
 
+// class for perishable goods
 public class PerishableProduct extends Product {
+    // instance variables
     private String expirationDate;
 
+    // constructors
     public PerishableProduct() {
         super();
         this.expirationDate = "";
@@ -12,6 +15,7 @@ public class PerishableProduct extends Product {
         super(id, name, desc, price, weight, qty);
         this.expirationDate = exp;
     }
+    //------------------------
 
     //      getters/setters
     public String getExpDate(){
@@ -21,4 +25,5 @@ public class PerishableProduct extends Product {
     public void setExpDate(String date) {
         this.expirationDate = date;
     }
+    //-------------------------------
 }

@@ -19,10 +19,10 @@ public enum STORAGE_TYPE {
     FIND_CUST,
     FIND_EMP,
     FIND_TRAN,
-    INC_PROD;
+    INC_PROD;           // different storage operations 
 
 
-    public String getFileName() {
+    public String getFileName() {   // get file name based on the type of type of storage 
         switch (this) {
         case STORE_CUST:
             return "cust.ser";
@@ -56,12 +56,14 @@ public enum STORAGE_TYPE {
             return "tran.ser";
         case FIND_TRAN:
             return "tran.ser";
+        case INC_PROD:
+            return "prod.ser";
         default:
             return "";
         }
     }
 
-    public static STORAGE_TYPE custFromInt(int opt) {
+    public static STORAGE_TYPE custFromInt(int opt) {       // get customer related file names based on integer input
         switch (opt) {
         case 1:
             return STORE_CUST;
@@ -74,7 +76,8 @@ public enum STORAGE_TYPE {
         }
     }
 
-    public static STORAGE_TYPE prodFromInt(int opt) {
+    public static STORAGE_TYPE prodFromInt(int opt) {   // get product related file names based on integer input
+
         switch (opt) {
         case 1:
             return STORE_PROD;
@@ -89,7 +92,8 @@ public enum STORAGE_TYPE {
         }
     }
 
-    public static STORAGE_TYPE empFromInt(int opt) {
+    public static STORAGE_TYPE empFromInt(int opt) {    // get employee related file names based on integer input
+
         switch (opt) {
         case 1:
             return STORE_EMP;

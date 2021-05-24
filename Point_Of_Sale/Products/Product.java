@@ -2,15 +2,18 @@ package Point_Of_Sale.Products;
 
 import java.io.Serializable;
 
+// product base class
 public abstract class Product implements Serializable {
     public static final int MIN_QTY = 5;    // used when checking stock levels
 
+    // instance variables
     private String productID;
     private String name;
     private String description;
     private double price;
     private float weight;
     private int quantity;
+    //------------------------
 
     // constructors
     public Product() {
@@ -80,9 +83,10 @@ public abstract class Product implements Serializable {
     public void setDesc(String desc) {
         this.description = desc;
     }
+    // end of getters/setters
 
     @Override
-    public String toString() {
+    public String toString() {      // return a formated string desrcibing product
         return String.format("%-10s\t\t%-30s\t\t%-10s\t\t%-10s\t\t%-10s\n%-10s\t\t%-30s\t\t%-10s\t\t%-10s\t\t%-10s",
                 "ID", "Desc", "Price", "Weight", "Qty", this.productID, this.description, this.price, this.weight,
                 this.quantity);

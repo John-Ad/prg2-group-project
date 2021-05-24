@@ -2,7 +2,7 @@ package Point_Of_Sale.Users;
 
 import java.io.Serializable;
 
-public abstract class User implements Serializable{
+public abstract class User implements Serializable{         // base class of users
     private static final long serialVersionUID = 1L;    // id for serialization
     private String ID;
     private String name;

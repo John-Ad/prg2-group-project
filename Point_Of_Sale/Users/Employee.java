@@ -1,9 +1,11 @@
 package Point_Of_Sale.Users;
 
 public class Employee extends User{
+    //instance variables
     private double salary;
     private String taxRegNum;
 
+    // constructor
     public Employee(){
         super();
         this.salary = 0;
@@ -16,6 +18,7 @@ public class Employee extends User{
         this.taxRegNum = reg;
     }
 
+    // getters/setters
     public double getSalary() {
         return this.salary;
     }

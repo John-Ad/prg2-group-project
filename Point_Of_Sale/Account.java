@@ -46,7 +46,7 @@ public class Account implements Serializable{
 
     //      worker methods
     public boolean debit(double amount) {
-        if (this.balance >= amount) {
+        if (this.balance >= amount) {   // check if balance is enough
             this.balance -= amount;
             System.out.println("Transaction successful!\nAvailable balance: " + this.balance + "\n");
             return true;

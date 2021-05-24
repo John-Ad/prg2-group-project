@@ -38,13 +38,15 @@ public class Card implements Serializable{
         //System.out.println(this.pin);     //debugging
     }
 
+    // check if pin is correct
     public boolean checkPin() {
         Scanner scanner = TextReadWrite.getScanner();
         String res;
+        // only 3 chances to enter pin
         for (int i = 2; i >= 0; i--) {   
             System.out.println("Enter pin: ");
             res = scanner.nextLine();
-            if (NumberConversion.toInt(res) != NumberConversion.ERROR) {
+            if (NumberConversion.toInt(res) != NumberConversion.ERROR) {    // check if pin is valid    // nums starting with 0 is valid
                 if (res.compareTo(this.pin) == 0) {
                     return true;
                 } else {

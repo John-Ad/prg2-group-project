@@ -1,6 +1,6 @@
 package Point_Of_Sale;
 
-public class NumberConversion {
+public class NumberConversion {     
     public static final int ERROR = -9999999;
 
     public static int toInt(String str) { // int conversion

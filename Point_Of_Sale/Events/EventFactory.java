@@ -1,19 +1,14 @@
 package Point_Of_Sale.Events;
 
-import Point_Of_Sale.NumberConversion;
-import Point_Of_Sale.TextReadWrite;
-import Point_Of_Sale.Transactions.TRAN_TYPE;
-import Point_Of_Sale.Transactions.TransactionGenerator;
-
-public class EventFactory {
-    public static Event getEvent(EVENT_TYPE type) {
+public class EventFactory {         // returns a specifc type of event depending on ev type
+    public static Event getEvent(EVENT_TYPE type) {     
         switch (type) {
         case TRANS:
-             return new TransactionEvent(type);
+             return new TransactionEvent(type);     // transaction event
         case STORAGE:
-            return new StorageEvent(type);
+            return new StorageEvent(type);          // storage event
         case REPORT:
-            return new ReportEvent(type);
+            return new ReportEvent(type);           // report event
         default:
             return null;
         }

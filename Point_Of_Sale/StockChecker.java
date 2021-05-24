@@ -6,8 +6,6 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
-
-import Point_Of_Sale.Exceptions.LowStockException;
 import Point_Of_Sale.Products.Product;
 import Point_Of_Sale.Storage.STORAGE_TYPE;
 import Point_Of_Sale.Storage.Storage;
@@ -17,6 +15,12 @@ public class StockChecker implements Callable<ArrayList<Product>> {
     public ArrayList<Product> call() {
         ArrayList<Product> arr = new ArrayList<>();
         while (true) {
+            /**
+             *      obtain all products
+             *      check each product for low stock
+             *      add products with low stock to an array
+             *      return array if its size is > 1
+             */
             HashMap<String, Product> map = (HashMap<String, Product>) Storage.readObjects(STORAGE_TYPE.GET_PROD);
             for (Map.Entry<String, Product> elem : map.entrySet()) {
                 System.out.println(((Product) elem.getValue()).getQty());
@@ -29,8 +33,4 @@ public class StockChecker implements Callable<ArrayList<Product>> {
             }
         }
     }
-    /**
-     *  1. check prod file for low stock levels
-     *  2. throw exception to be caught by POS
-     */
 }
