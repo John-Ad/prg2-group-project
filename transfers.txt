@@ -1,5 +1,0 @@
-Account ID          		Total Credited      		Total Debited       		Total Transfers     
-
-3164691744          		0.0                 		143.0               		143.0               		
-9908591094          		0.0                 		0.0                 		0.0                 		
-7984474133          		0.0                 		0.0                 		0.0                 		

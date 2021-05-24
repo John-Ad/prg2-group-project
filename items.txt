@@ -1,4 +1,0 @@
-Item ID             		Description         		Price               		Qty sold            		Total               
-
-323017              		asdf                		420.0               		0                   		0.0                 		
-927259              		gfj                 		55.0                		0                   		0.0                 		

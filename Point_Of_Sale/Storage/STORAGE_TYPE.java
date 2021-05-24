@@ -18,7 +18,9 @@ public enum STORAGE_TYPE {
     FIND_PROD,
     FIND_CUST,
     FIND_EMP,
-    FIND_TRAN;
+    FIND_TRAN,
+    INC_PROD;
+
 
     public String getFileName() {
         switch (this) {
@@ -80,6 +82,8 @@ public enum STORAGE_TYPE {
             return REM_PROD;
         case 3:
             return FIND_PROD;
+        case 4:
+            return INC_PROD;
         default:
             return null;
         }

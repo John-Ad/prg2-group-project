@@ -6,6 +6,8 @@ import java.util.Arrays;
 import Point_Of_Sale.Account;
 import Point_Of_Sale.NumberConversion;
 import Point_Of_Sale.TextReadWrite;
+import Point_Of_Sale.Storage.STORAGE_TYPE;
+import Point_Of_Sale.Storage.Storage;
 import Point_Of_Sale.Users.Client;
 import Point_Of_Sale.Users.Employee;
 
@@ -20,6 +22,12 @@ public class UserBuilder {
         System.out.print("\nenter email: ");
         email = TextReadWrite.getScanner().nextLine();
 
+        if (Storage.findObject(STORAGE_TYPE.FIND_CUST, email) != null
+                || Storage.findObject(STORAGE_TYPE.FIND_EMP, email) != null) {
+            System.out.println("user with that email address already exists!");
+            return null;
+        }
+
         return new ArrayList<>(Arrays.asList(uID, name, email));    //return array of user values
     }
 
@@ -30,6 +38,9 @@ public class UserBuilder {
 
         //obtain general data; build and return client
         ArrayList<String> uData = buildUserDetails();
+        if (uData == null) {
+            return null;
+        }
 
         return new Client(uData.get(0), uData.get(1), uData.get(2), account);
     }
@@ -37,6 +48,9 @@ public class UserBuilder {
     public static Employee buildEmployee() {
         //obtain general data
         ArrayList<String> uData = buildUserDetails();
+        if (uData == null) {
+            return null;
+        }
 
         //obtain employee specific data
         String input, reg;

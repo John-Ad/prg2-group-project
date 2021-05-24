@@ -7,6 +7,8 @@ import java.util.Date;
 
 import Point_Of_Sale.NumberConversion;
 import Point_Of_Sale.TextReadWrite;
+import Point_Of_Sale.Storage.STORAGE_TYPE;
+import Point_Of_Sale.Storage.Storage;
 
 public class ProductBuilder {
     private static ArrayList<Object> buildProdDetails() {
@@ -19,6 +21,11 @@ public class ProductBuilder {
 
         System.out.print("\nenter name: ");
         name = TextReadWrite.getScanner().nextLine();
+
+        if (Storage.findObject(STORAGE_TYPE.FIND_PROD, name) != null) {
+            System.out.println("product with that name already exist!");
+            return null;
+        }
 
         System.out.print("\nenter description: ");
         desc = TextReadWrite.getScanner().nextLine();
@@ -46,6 +53,9 @@ public class ProductBuilder {
 
     public static PerishableProduct buildPerProd() {
         ArrayList<Object> pData = buildProdDetails();
+        if (pData==null){
+            return null;
+        }
         Date date;
 
         while (true) {
@@ -65,6 +75,9 @@ public class ProductBuilder {
 
     public static NonPerishableProduct buildNonPerProd() {
         ArrayList<Object> pData = buildProdDetails();
+        if (pData==null){
+            return null;
+        }
         Date date;
 
         while (true) {

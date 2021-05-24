@@ -51,30 +51,24 @@ public class Storage {
         }
     }
 
-    public static Object findObject(STORAGE_TYPE type, Object item) {
+    public static Object findObject(STORAGE_TYPE type, String item) {
         switch (type) {
         case FIND_CUST:
             HashMap<String, Client> cmap = (HashMap<String, Client>) Storage.readObjects(type); //retrieve stored data
-            if (cmap.containsKey((String) item)) {
-                return cmap.get((String) item);
-            }else{
-                System.out.println("Customer not found");
+            if (cmap.containsKey(item)) {
+                return cmap.get(item);
             }
             break;
         case FIND_PROD:
             HashMap<String, Product> pmap = (HashMap<String, Product>) Storage.readObjects(type); //retrieve stored data
-            if (pmap.containsKey((String) item)) {
-                return pmap.get((String) item);
-            }else{
-                System.out.println("Product not found");
+            if (pmap.containsKey(item)) {
+                return pmap.get(item);
             }
             break;
         case FIND_EMP:
             HashMap<String, Employee> emap = (HashMap<String, Employee>) Storage.readObjects(type); //retrieve stored data
-            if (emap.containsKey((String) item)) {
-                return emap.get((String) item);
-            }else{
-                System.out.println("Employee not found");
+            if (emap.containsKey(item)) {
+                return emap.get(item);
             }
             break;
         default:
@@ -112,20 +106,20 @@ public class Storage {
         }
     }
 
-    public static void remObject(STORAGE_TYPE type, Object item) {
+    public static void remObject(STORAGE_TYPE type, String item) {
         switch (type) {
             case REM_CUST:
                 HashMap<String, Client> cmap = (HashMap<String, Client>) Storage.readObjects(type); //retrieve stored data
-                cmap.remove((String) item);
+                cmap.remove(item);
                 Storage.writeObjects(type, cmap);
                 break;
             case REM_EMP:
                 HashMap<String, Employee> emap = (HashMap<String, Employee>) Storage.readObjects(type); //retrieve stored data
-                emap.remove((String) item);
+                emap.remove(item);
                 Storage.writeObjects(type, emap);
             case REM_PROD:
                 HashMap<String, Product> pmap = (HashMap<String, Product>) Storage.readObjects(type); //retrieve stored data
-                pmap.remove((String) item);
+                pmap.remove(item);
                 Storage.writeObjects(type, pmap);
                 break;
         }

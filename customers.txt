@@ -1,5 +1,0 @@
-Name                	|	Email               	|	Items bought        	|	Total spent         
-
-Setson              		email2              		2                   		143.0               		
-john                		emailJ              		0                   		0.0                 		
-email               		email               		0                   		0.0                 		
