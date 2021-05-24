@@ -111,13 +111,15 @@ public class POS implements Runnable {
         switch (event.evType) {
         case TRANS:
             TransactionEvent sale = (TransactionEvent) event;
-            if (sale.transaction.getClient().getCard().checkPin()) {
-                if (sale.transaction.getAmount() < 0) { //if the amount is negative then the client gets a refund
-                    sale.transaction.getClient().getAcc().credit(-sale.transaction.getAmount());
-                } else {
-                    sale.transaction.getClient().getAcc().debit(sale.transaction.getAmount());
+            if (sale.transaction != null) {
+                if (sale.transaction.getClient().getCard().checkPin()) {
+                    if (sale.transaction.getAmount() < 0) { //if the amount is negative then the client gets a refund
+                        sale.transaction.getClient().getAcc().credit(-sale.transaction.getAmount());
+                    } else {
+                        sale.transaction.getClient().getAcc().debit(sale.transaction.getAmount());
+                    }
+                    Storage.addObject(STORAGE_TYPE.STORE_TRAN, sale.transaction);
                 }
-                Storage.addObject(STORAGE_TYPE.STORE_TRAN, sale.transaction);
             }
             break;
         case STORAGE:
@@ -277,7 +279,7 @@ public class POS implements Runnable {
 
             // if there was low stock display it
             if (lowStock != null && lowStock.size() > 0) {
-                System.out.println("\t" + lowStock.size() + " have low stock:");
+                System.out.println("\t" + lowStock.size() + " item(s) with low stock:");
                 for (Product p : lowStock) {
                     System.out.println(p.toString());
                 }
@@ -299,6 +301,8 @@ public class POS implements Runnable {
                         currentMenu = menuList.get(menuList.size() - 1);    // set current menu to prev menu in list
                     } else {        // exit application
                         running = false;
+                        f.cancel(true);         // cancel task
+                        f = null;
                     }
                 } else {    // user was chose an option other than EXIT in current menu
                     if (currentMenu == MENUS.toInt(MENUS.MAIN)) { // if main menu, change menu

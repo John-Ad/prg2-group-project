@@ -86,9 +86,10 @@ public abstract class Product implements Serializable {
     // end of getters/setters
 
     @Override
-    public String toString() {      // return a formated string desrcibing product
-        return String.format("%-10s\t\t%-30s\t\t%-10s\t\t%-10s\t\t%-10s\n%-10s\t\t%-30s\t\t%-10s\t\t%-10s\t\t%-10s",
-                "ID", "Desc", "Price", "Weight", "Qty", this.productID, this.description, this.price, this.weight,
-                this.quantity);
+    public String toString() { // return a formated string desrcibing product
+        return String.format(
+                "%-10s\t\t%-10s\t\t%-30s\t\t%-10s\t\t%-10s\t\t%-10s\n%-10s\t\t%-10s\t\t%-30s\t\t%-10s\t\t%-10s\t\t%-10s", "ID",
+                "Name", "Desc", "Price", "Weight", "Qty", this.productID, this.name, this.description, this.price,
+                this.weight, this.quantity);
     }
 }

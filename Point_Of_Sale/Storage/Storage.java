@@ -41,7 +41,6 @@ public class Storage {
             /* if any error occurs eg file doesnt exist or is empty
                 initialize file with empty data structure eg arrayList or hashmap
             */
-            System.out.println("Creating new file");
 
             // objects to initialize file with
             HashMap<String, Object> map = new HashMap<String, Object>();
@@ -91,8 +90,25 @@ public class Storage {
             os.close();
             return data;
         } catch (Exception ex) {
-            
-            ex.printStackTrace();
+            /* if any error occurs eg file doesnt exist or is empty
+                return empy data structure
+            */
+            // objects to initialize file with
+            HashMap<String, Object> map = new HashMap<String, Object>();
+            ArrayList<Object> arr = new ArrayList<Object>();
+            //----------------------------------------------
+
+            //  based on file type save one of the 2 objects above
+            switch (type.getFileName()) {
+            case "tran.ser":
+                return arr;
+            case "cust.ser":
+                return map;
+            case "prod.ser":
+                return map;
+            case "emp.ser":
+                return map;
+            }
             return null;
         }
     }

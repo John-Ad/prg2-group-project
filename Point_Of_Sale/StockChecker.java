@@ -23,7 +23,6 @@ public class StockChecker implements Callable<ArrayList<Product>> {
              */
             HashMap<String, Product> map = (HashMap<String, Product>) Storage.readObjects(STORAGE_TYPE.GET_PROD);
             for (Map.Entry<String, Product> elem : map.entrySet()) {
-                System.out.println(((Product) elem.getValue()).getQty());
                 if (((Product) elem.getValue()).getQty() < Product.MIN_QTY) {
                     arr.add((Product) elem.getValue());
                 }

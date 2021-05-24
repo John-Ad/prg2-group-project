@@ -210,7 +210,6 @@ public class Report {       // contains all methods/attributes to manipulate a r
     public String getOldReport() throws Exception {
         String report = "";
         Scanner scanner = new Scanner(new File(REPORT_TYPE.getFileName(type))); // scanner that reads files
-
         // read file line by line
         while (scanner.hasNext()) {
             report += scanner.nextLine() + "\n";

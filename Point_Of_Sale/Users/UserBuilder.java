@@ -35,7 +35,7 @@ public class UserBuilder {
     public static Client buildClient() {
         //buid account and card     //account class handles Card construction
         String accID = Long.toString((long) Math.floor(Math.random() * 9_000_000_000L) + 1_000_000_000L); //random 10 digit value
-        Account account = new Account(accID, 0);
+        Account account = new Account(accID, 1000);
 
         //obtain general data; build and return client
         ArrayList<String> uData = buildUserDetails();
